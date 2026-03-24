@@ -1,27 +1,29 @@
 /* ============================================
-   MENU TEMPLATE STYLES - PRO Edition
+   MENU TEMPLATE STYLES — Professional Edition
+   Designer-quality output for printed menus
    6 Templates with Photo Support
    ============================================ */
 
-/* --- Page Sizes --- */
+/* --- Page Sizes (A4 at 96dpi) --- */
 .page-a4-portrait  { width: 794px; min-height: 1123px; }
 .page-a4-landscape { width: 1123px; min-height: 794px; }
 .page-a3-portrait  { width: 1123px; min-height: 1587px; }
 
 /* --- Shared Base --- */
 .menu-template {
-    padding: 48px 40px;
+    padding: 56px 48px;
     position: relative;
     overflow: hidden;
+    line-height: 1.7;
 }
 
 .menu-template .menu-header {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 
 .menu-template .shop-logo {
-    margin: 0 auto 12px;
+    margin: 0 auto 16px;
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -47,36 +49,36 @@
     width: 100%;
 }
 .menu-template .category-section {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 .menu-template .category-title {
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 .menu-template .category-desc {
     text-align: center;
     font-size: 0.75rem;
-    opacity: 0.7;
-    margin-bottom: 12px;
+    opacity: 0.6;
+    margin-bottom: 14px;
 }
 
 .menu-template .tax-note {
     text-align: center;
     font-size: 0.65rem;
-    opacity: 0.5;
-    margin-top: 24px;
-    padding-top: 16px;
+    opacity: 0.45;
+    margin-top: 32px;
+    padding-top: 20px;
 }
 
 .menu-template .menu-footer {
-    margin-top: 24px;
-    padding-top: 16px;
+    margin-top: 28px;
+    padding-top: 20px;
     text-align: center;
 }
 .menu-template .footer-info {
     font-size: 0.7rem;
-    opacity: 0.6;
-    letter-spacing: 1px;
+    opacity: 0.5;
+    letter-spacing: 1.5px;
 }
 
 /* --- Classic list entry (text-elegant, salon) --- */
@@ -84,7 +86,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     gap: 12px;
 }
 .menu-template .entry-info { flex: 1; }
@@ -103,60 +105,98 @@
 
 
 /* ============================================
-   TEMPLATE 1: 写真メイン（グリッド） photo-grid
+   TEMPLATE 1: photo-grid  写真メイン
+   Clean white gallery with photo-dominant cards
    ============================================ */
 .template-photo-grid {
-    background: #ffffff;
+    background: #fafafa;
     color: #333;
     font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    padding: 48px 36px;
 }
+
+/* --- Header --- */
 .template-photo-grid .shop-name {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #222;
-    letter-spacing: 2px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 .template-photo-grid .shop-subtitle {
-    font-size: 0.8rem;
-    color: #888;
-    letter-spacing: 2px;
+    font-size: 0.75rem;
+    color: #999;
+    letter-spacing: 3px;
+    font-weight: 400;
+    margin-top: 4px;
 }
 .template-photo-grid .shop-logo {
-    border: 2px solid #eee;
+    border: 2px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-.template-photo-grid .category-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #333;
-    letter-spacing: 3px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #e74c3c;
-    display: inline-block;
-    margin: 0 auto 16px;
+.template-photo-grid .menu-header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
 }
+.template-photo-grid .menu-header::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: #e74c3c;
+    margin: 20px auto 0;
+}
+
+/* --- Category --- */
 .template-photo-grid .category-section {
     text-align: center;
+    margin-bottom: 28px;
 }
+.template-photo-grid .category-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    position: relative;
+    display: inline-block;
+    margin: 0 auto 20px;
+}
+.template-photo-grid .category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background: #e74c3c;
+}
+
+/* --- Grid --- */
 .template-photo-grid .grid-items {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 14px;
     text-align: left;
 }
 .template-photo-grid .grid-item {
-    background: #fafafa;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 10px;
     overflow: hidden;
-    border: 1px solid #eee;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s ease;
 }
 .template-photo-grid .grid-photo {
     width: 100%;
-    height: 140px;
+    height: 160px;
     overflow: hidden;
     background: #f0f0f0;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 .template-photo-grid .grid-photo img {
     width: 100%;
@@ -165,37 +205,44 @@
 }
 .template-photo-grid .grid-photo-empty {
     color: #ccc;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
 }
 .template-photo-grid .grid-info {
-    padding: 10px 12px;
+    padding: 12px 14px 14px;
 }
 .template-photo-grid .grid-name {
     display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #222;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
 }
 .template-photo-grid .grid-desc {
     display: block;
-    font-size: 0.7rem;
-    color: #888;
-    margin-top: 2px;
+    font-size: 0.68rem;
+    color: #999;
+    margin-top: 3px;
+    line-height: 1.5;
 }
 .template-photo-grid .grid-price {
     display: block;
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 800;
     color: #e74c3c;
-    margin-top: 4px;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
 }
 .template-photo-grid .tax-note {
     border-top: 1px solid #eee;
-    color: #aaa;
+    color: #bbb;
+    margin-top: 24px;
+    padding-top: 16px;
 }
 .template-photo-grid .menu-footer {
     border-top: 1px solid #eee;
-    color: #aaa;
+    color: #bbb;
 }
 
 /* A4 landscape: 3 columns */
@@ -205,54 +252,90 @@
 
 
 /* ============================================
-   TEMPLATE 2: 写真＋説明（横並び） photo-side
+   TEMPLATE 2: photo-side  写真＋説明
+   Editorial style — photo left, details right
    ============================================ */
 .template-photo-side {
-    background: #fff;
+    background: #ffffff;
     color: #333;
     font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    padding: 52px 44px;
 }
+
+/* --- Header --- */
 .template-photo-side .shop-name {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2c3e50;
-}
-.template-photo-side .shop-subtitle {
-    font-size: 0.8rem;
-    color: #7f8c8d;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
     letter-spacing: 2px;
 }
+.template-photo-side .shop-subtitle {
+    font-size: 0.72rem;
+    color: #aaa;
+    letter-spacing: 3px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
 .template-photo-side .shop-logo {
-    border: 2px solid #ecf0f1;
+    border: 2px solid #f0f0f0;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
 }
 .template-photo-side .menu-header {
-    padding-bottom: 20px;
-    border-bottom: 2px solid #2c3e50;
-    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #1a1a1a;
+    margin-bottom: 32px;
 }
+
+/* --- Category --- */
 .template-photo-side .category-title {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 4px;
-    color: #2c3e50;
+    letter-spacing: 5px;
+    color: #1a1a1a;
     text-transform: uppercase;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
     text-align: left;
+    position: relative;
+    margin-bottom: 4px;
 }
+.template-photo-side .category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #1a1a1a;
+}
+.template-photo-side .category-title::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #1a1a1a;
+}
+
+/* --- Entries --- */
 .template-photo-side .side-entry {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 10px 0;
+    gap: 16px;
+    padding: 14px 0;
     border-bottom: 1px solid #f0f0f0;
 }
+.template-photo-side .side-entry:last-child {
+    border-bottom: none;
+}
 .template-photo-side .side-photo {
-    width: 70px;
-    height: 70px;
+    width: 88px;
+    height: 88px;
     border-radius: 8px;
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .template-photo-side .side-photo img {
     width: 100%;
@@ -261,25 +344,31 @@
 }
 .template-photo-side .side-info {
     flex: 1;
+    min-width: 0;
 }
 .template-photo-side .side-name {
     display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #2c3e50;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
 }
 .template-photo-side .side-desc {
     display: block;
-    font-size: 0.72rem;
-    color: #7f8c8d;
-    margin-top: 2px;
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 3px;
+    font-style: italic;
+    line-height: 1.5;
 }
 .template-photo-side .side-price {
     font-size: 0.95rem;
-    font-weight: 700;
-    color: #2c3e50;
+    font-weight: 800;
+    color: #1a1a1a;
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: 0.5px;
 }
 .template-photo-side .tax-note {
     border-top: 1px solid #eee;
@@ -287,377 +376,548 @@
 }
 .template-photo-side .menu-footer {
     border-top: 1px solid #eee;
-    color: #999;
+    color: #aaa;
 }
 
 
 /* ============================================
-   TEMPLATE 3: テキストメイン（高級感） text-elegant
+   TEMPLATE 3: text-elegant  テキストメイン（高級店）
+   Dark charcoal with gold typography
+   Double-frame border, centered layout
    ============================================ */
 .template-text-elegant {
     background: #1c1c1c;
     color: #c9a84c;
     font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+    padding: 60px 56px;
+    line-height: 1.9;
 }
+
+/* --- Double gold border frame --- */
 .template-text-elegant::before {
     content: '';
     position: absolute;
-    inset: 14px;
-    border: 1px solid rgba(201, 168, 76, 0.15);
+    inset: 16px;
+    border: 1.5px solid rgba(201, 168, 76, 0.25);
     pointer-events: none;
 }
 .template-text-elegant::after {
     content: '';
     position: absolute;
-    inset: 18px;
-    border: 1px solid rgba(201, 168, 76, 0.08);
+    inset: 22px;
+    border: 0.5px solid rgba(201, 168, 76, 0.12);
     pointer-events: none;
 }
+
+/* --- Header --- */
 .template-text-elegant .shop-logo {
     border: 1px solid rgba(201, 168, 76, 0.3);
 }
 .template-text-elegant .menu-header {
-    padding-bottom: 24px;
-    margin-bottom: 36px;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
 }
 .template-text-elegant .menu-header::after {
-    content: '\2014  \2726  \2014';
+    content: '\2500\2500\2500  \25C6  \2500\2500\2500';
     display: block;
-    margin-top: 16px;
-    font-size: 0.9rem;
+    margin-top: 20px;
+    font-size: 0.8rem;
     color: rgba(201, 168, 76, 0.3);
-    letter-spacing: 8px;
+    letter-spacing: 6px;
 }
 .template-text-elegant .shop-name {
     font-size: 2.2rem;
     font-weight: 600;
     color: #c9a84c;
-    letter-spacing: 8px;
+    letter-spacing: 10px;
 }
 .template-text-elegant .shop-subtitle {
-    font-size: 0.8rem;
-    color: rgba(201, 168, 76, 0.5);
-    letter-spacing: 4px;
+    font-size: 0.78rem;
+    color: rgba(201, 168, 76, 0.45);
+    letter-spacing: 5px;
     font-style: italic;
+    margin-top: 4px;
+}
+
+/* --- Category --- */
+.template-text-elegant .category-section {
+    margin-bottom: 36px;
 }
 .template-text-elegant .category-title {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: #c9a84c;
-    letter-spacing: 6px;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
 }
-.template-text-elegant .category-title::before { content: '\2014 '; color: rgba(201,168,76,0.3); }
-.template-text-elegant .category-title::after  { content: ' \2014'; color: rgba(201,168,76,0.3); }
+.template-text-elegant .category-title::before {
+    content: '\2500\2500\2500  ';
+    color: rgba(201, 168, 76, 0.25);
+    letter-spacing: 2px;
+}
+.template-text-elegant .category-title::after {
+    content: '  \2500\2500\2500';
+    color: rgba(201, 168, 76, 0.25);
+    letter-spacing: 2px;
+}
 
+/* --- Menu items --- */
 .template-text-elegant .menu-entry {
-    padding: 8px 0;
+    padding: 10px 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
 }
 .template-text-elegant .entry-name {
     font-size: 0.95rem;
-    color: #e0d5b0;
+    color: #e8dcc0;
+    letter-spacing: 2px;
+    font-weight: 400;
 }
 .template-text-elegant .entry-desc {
-    font-size: 0.72rem;
-    color: rgba(201, 168, 76, 0.45);
+    font-size: 0.7rem;
+    color: rgba(201, 168, 76, 0.4);
     font-style: italic;
+    letter-spacing: 1px;
 }
 .template-text-elegant .entry-price {
     font-size: 0.95rem;
     font-weight: 600;
     color: #c9a84c;
+    letter-spacing: 1px;
 }
 .template-text-elegant .dot-leader {
     border-bottom-color: rgba(201, 168, 76, 0.15);
+    border-bottom-style: dotted;
 }
 .template-text-elegant .tax-note {
-    border-top: 1px solid rgba(201,168,76,0.1);
-    color: rgba(201,168,76,0.35);
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    color: rgba(201, 168, 76, 0.3);
+    letter-spacing: 2px;
 }
 .template-text-elegant .menu-footer {
-    border-top: 1px solid rgba(201,168,76,0.1);
-    color: rgba(201,168,76,0.4);
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    color: rgba(201, 168, 76, 0.35);
+    letter-spacing: 2px;
 }
 
 
 /* ============================================
-   TEMPLATE 4: カフェ風（ナチュラル） cafe
+   TEMPLATE 4: cafe  カフェ風
+   Warm cream with terracotta accents
+   Circular photos, handwritten feel
    ============================================ */
 .template-cafe {
     background: #f5f0e6;
-    color: #5c4033;
+    color: #3e2723;
     font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    padding: 48px 44px;
     position: relative;
+    line-height: 1.8;
 }
+
+/* Subtle paper texture overlay */
 .template-cafe::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235c4033' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3C/g%3E%3C/svg%3E");
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(160, 82, 45, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(160, 82, 45, 0.02) 0%, transparent 50%);
     pointer-events: none;
 }
+
+/* --- Header --- */
 .template-cafe .shop-logo {
     border: 2px solid #d4c4a8;
+    box-shadow: 0 2px 6px rgba(62, 39, 35, 0.08);
 }
 .template-cafe .menu-header {
     padding-bottom: 20px;
-    border-bottom: 2px solid #d4c4a8;
+    margin-bottom: 32px;
+    position: relative;
+}
+.template-cafe .menu-header::after {
+    content: '\2615';
+    display: block;
+    margin-top: 12px;
+    font-size: 1.1rem;
+    opacity: 0.3;
 }
 .template-cafe .shop-name {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #5c4033;
-    letter-spacing: 2px;
+    color: #3e2723;
+    letter-spacing: 3px;
 }
 .template-cafe .shop-subtitle {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #8b7355;
     letter-spacing: 3px;
     font-style: italic;
+    margin-top: 2px;
+}
+
+/* --- Category --- */
+.template-cafe .category-section {
+    margin-bottom: 28px;
 }
 .template-cafe .category-title {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    color: #8b6f47;
-    letter-spacing: 4px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #d4c4a8;
+    color: #a0522d;
+    letter-spacing: 3px;
     text-align: left;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    position: relative;
 }
+.template-cafe .category-title::before {
+    content: '\273f';
+    margin-right: 8px;
+    font-size: 0.8rem;
+    color: #c9956a;
+}
+.template-cafe .category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-bottom: 2px dashed #d4c4a8;
+}
+
+/* --- Entries --- */
 .template-cafe .cafe-entry {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 0;
+    gap: 14px;
+    padding: 10px 0;
     border-bottom: 1px dashed #e0d5c0;
 }
+.template-cafe .cafe-entry:last-child {
+    border-bottom: none;
+}
 .template-cafe .cafe-photo {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    border: 2px solid #d4c4a8;
+    border: 2.5px solid #d4c4a8;
+    box-shadow: 0 2px 6px rgba(62, 39, 35, 0.08);
 }
 .template-cafe .cafe-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.template-cafe .cafe-info { flex: 1; }
+.template-cafe .cafe-info {
+    flex: 1;
+    min-width: 0;
+}
 .template-cafe .cafe-name {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 500;
-    color: #5c4033;
+    color: #3e2723;
+    letter-spacing: 0.5px;
 }
 .template-cafe .cafe-desc {
     display: block;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: #8b7355;
     font-style: italic;
+    margin-top: 2px;
+    line-height: 1.5;
 }
 .template-cafe .cafe-price {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #8b6f47;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #a0522d;
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: 0.5px;
 }
 .template-cafe .tax-note {
-    border-top: 1px solid #d4c4a8;
+    border-top: 2px dashed #d4c4a8;
     color: #b8a88a;
 }
 .template-cafe .menu-footer {
-    border-top: 1px solid #d4c4a8;
+    border-top: 1px dashed #d4c4a8;
     color: #8b7355;
 }
 
 
 /* ============================================
-   TEMPLATE 5: 居酒屋風（和風） izakaya
+   TEMPLATE 5: izakaya  居酒屋風
+   Deep navy with gold accents
+   Japanese aesthetic, decorative corners
    ============================================ */
 .template-izakaya {
-    background: #1a1a2e;
+    background: #0d1b2a;
     color: #d4a04a;
     font-family: 'Noto Serif JP', 'Shippori Mincho', serif;
+    padding: 56px 48px;
     position: relative;
+    line-height: 1.8;
 }
+
+/* --- Decorative double border with corner accents --- */
 .template-izakaya::before {
     content: '';
     position: absolute;
-    inset: 12px;
-    border: 1px solid rgba(212, 160, 74, 0.2);
+    inset: 14px;
+    border: 1.5px solid rgba(212, 160, 74, 0.25);
     pointer-events: none;
 }
 .template-izakaya::after {
     content: '';
     position: absolute;
-    inset: 16px;
-    border: 1px solid rgba(212, 160, 74, 0.1);
+    inset: 19px;
+    border: 0.5px solid rgba(212, 160, 74, 0.12);
     pointer-events: none;
 }
+
+/* --- Header --- */
 .template-izakaya .shop-logo {
-    border: 1px solid rgba(212,160,74,0.3);
-    filter: drop-shadow(0 0 8px rgba(212,160,74,0.2));
+    border: 1.5px solid rgba(212, 160, 74, 0.35);
+    filter: drop-shadow(0 0 10px rgba(212, 160, 74, 0.15));
 }
 .template-izakaya .shop-name {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: #d4a04a;
-    letter-spacing: 8px;
+    letter-spacing: 10px;
 }
 .template-izakaya .shop-subtitle {
-    font-size: 0.8rem;
-    color: rgba(212,160,74,0.6);
-    letter-spacing: 4px;
+    font-size: 0.75rem;
+    color: rgba(212, 160, 74, 0.5);
+    letter-spacing: 5px;
+    margin-top: 4px;
+}
+.template-izakaya .menu-header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
 }
 .template-izakaya .menu-header::after {
     content: '\2756';
     display: block;
-    margin-top: 16px;
-    font-size: 1.2rem;
-    color: rgba(212,160,74,0.4);
+    margin-top: 18px;
+    font-size: 1rem;
+    color: rgba(212, 160, 74, 0.3);
+    letter-spacing: 4px;
+}
+
+/* --- Category --- */
+.template-izakaya .category-section {
+    margin-bottom: 32px;
 }
 .template-izakaya .category-title {
     font-size: 1rem;
     font-weight: 600;
     color: #d4a04a;
-    letter-spacing: 6px;
+    letter-spacing: 8px;
+    margin-bottom: 16px;
 }
-.template-izakaya .category-title::before { content: '\2014 '; color: rgba(212,160,74,0.4); }
-.template-izakaya .category-title::after  { content: ' \2014'; color: rgba(212,160,74,0.4); }
+.template-izakaya .category-title::before {
+    content: '\2500\2500  ';
+    color: rgba(212, 160, 74, 0.3);
+    letter-spacing: 2px;
+}
+.template-izakaya .category-title::after {
+    content: '  \2500\2500';
+    color: rgba(212, 160, 74, 0.3);
+    letter-spacing: 2px;
+}
 
+/* --- Entries --- */
 .template-izakaya .iza-entry {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(212,160,74,0.1);
+    gap: 14px;
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(212, 160, 74, 0.08);
+    transition: background 0.2s ease;
+}
+.template-izakaya .iza-entry:last-child {
+    border-bottom: none;
 }
 .template-izakaya .iza-photo {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
-    border: 1px solid rgba(212,160,74,0.25);
+    border: 2px solid rgba(212, 160, 74, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 .template-izakaya .iza-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.template-izakaya .iza-info { flex: 1; }
+.template-izakaya .iza-info {
+    flex: 1;
+    min-width: 0;
+}
 .template-izakaya .iza-name {
     display: block;
     font-size: 0.95rem;
-    color: #d4a04a;
+    color: #e8dcc0;
+    letter-spacing: 1.5px;
+    font-weight: 400;
 }
 .template-izakaya .iza-desc {
     display: block;
-    font-size: 0.72rem;
-    color: rgba(212,160,74,0.5);
+    font-size: 0.68rem;
+    color: rgba(212, 160, 74, 0.4);
+    margin-top: 2px;
+    line-height: 1.5;
 }
 .template-izakaya .iza-price {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #e8c878;
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: 1px;
 }
 .template-izakaya .tax-note {
-    border-top: 1px solid rgba(212,160,74,0.1);
-    color: rgba(212,160,74,0.35);
+    border-top: 1px solid rgba(212, 160, 74, 0.1);
+    color: rgba(212, 160, 74, 0.3);
+    letter-spacing: 2px;
 }
 .template-izakaya .menu-footer {
-    border-top: 1px solid rgba(212,160,74,0.1);
-    color: rgba(212,160,74,0.4);
+    border-top: 1px solid rgba(212, 160, 74, 0.1);
+    color: rgba(212, 160, 74, 0.35);
+    letter-spacing: 2px;
 }
 
 
 /* ============================================
-   TEMPLATE 6: サロン・美容室 salon
+   TEMPLATE 6: salon  サロン・美容室
+   Minimal lavender with purple accents
+   Clean service-list layout, no photos
    ============================================ */
 .template-salon {
-    background: linear-gradient(180deg, #faf5ff 0%, #f5eef8 100%);
-    color: #5a4060;
+    background: linear-gradient(180deg, #faf5ff 0%, #f3ecf8 100%);
+    color: #4a3560;
     font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+    padding: 56px 52px;
     position: relative;
     overflow: hidden;
+    line-height: 1.8;
 }
+
+/* Soft decorative gradients */
 .template-salon::before {
     content: '';
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(212,160,200,0.1), transparent 70%);
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.04), transparent 70%);
     pointer-events: none;
 }
 .template-salon::after {
     content: '';
     position: absolute;
-    bottom: -100px;
-    left: -100px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(160,180,212,0.08), transparent 70%);
+    bottom: -80px;
+    left: -80px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.03), transparent 70%);
     pointer-events: none;
 }
+
+/* --- Header --- */
 .template-salon .shop-logo {
-    border: 2px solid rgba(180,140,200,0.3);
+    border: 1.5px solid rgba(124, 58, 237, 0.2);
 }
 .template-salon .menu-header {
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(180,140,200,0.2);
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+    margin-bottom: 36px;
 }
 .template-salon .shop-name {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 600;
-    color: #6b4c7a;
-    letter-spacing: 4px;
+    color: #5b2e8a;
+    letter-spacing: 5px;
 }
 .template-salon .shop-subtitle {
-    font-size: 0.75rem;
-    color: #a088b0;
+    font-size: 0.72rem;
+    color: #a088b8;
     letter-spacing: 3px;
+    margin-top: 4px;
+}
+
+/* --- Category --- */
+.template-salon .category-section {
+    margin-bottom: 32px;
 }
 .template-salon .category-title {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     font-weight: 500;
-    color: #8b6ca0;
-    letter-spacing: 3px;
+    color: #7c3aed;
+    letter-spacing: 4px;
+    text-align: left;
+    padding-bottom: 8px;
+    position: relative;
+    margin-bottom: 12px;
 }
-.template-salon .category-title::before { content: '\273f '; color: #d4a0c8; font-size: 0.8rem; }
+.template-salon .category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #7c3aed 0%, rgba(124, 58, 237, 0.08) 100%);
+}
 
+/* --- Menu items --- */
 .template-salon .menu-entry {
-    padding: 7px 0;
-    border-bottom: 1px solid rgba(180,140,200,0.1);
+    padding: 10px 4px;
+    border-bottom: 1px solid rgba(124, 58, 237, 0.06);
+}
+.template-salon .menu-entry:last-child {
+    border-bottom: none;
 }
 .template-salon .entry-name {
     font-size: 0.9rem;
-    color: #5a4060;
+    color: #4a3560;
+    letter-spacing: 1px;
+    font-weight: 400;
 }
 .template-salon .entry-desc {
-    font-size: 0.72rem;
-    color: #a088b0;
+    font-size: 0.68rem;
+    color: #a088b8;
+    letter-spacing: 0.5px;
 }
 .template-salon .entry-price {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #8b6ca0;
+    color: #7c3aed;
+    letter-spacing: 0.5px;
 }
 .template-salon .dot-leader {
-    border-bottom-color: rgba(180,140,200,0.2);
+    border-bottom-color: rgba(124, 58, 237, 0.15);
+    border-bottom-style: dotted;
 }
 .template-salon .tax-note {
-    border-top: 1px solid rgba(180,140,200,0.15);
-    color: #b8a0c0;
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+    color: #b8a0c8;
+    letter-spacing: 1px;
 }
 .template-salon .menu-footer {
-    border-top: 1px solid rgba(180,140,200,0.15);
-    color: #a088b0;
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+    color: #a088b8;
+    letter-spacing: 1px;
 }
 
 
@@ -987,18 +1247,28 @@
     .page-a4-landscape { size: A4 landscape; }
     .page-a3-portrait  { size: A3 portrait; }
 
-    /* Ensure backgrounds print */
-    .template-text-elegant,
-    .template-izakaya {
+    /* Ensure dark backgrounds print correctly */
+    .template-text-elegant {
         background-color: #1c1c1c !important;
     }
     .template-izakaya {
-        background-color: #1a1a2e !important;
+        background-color: #0d1b2a !important;
     }
     .template-cafe {
         background-color: #f5f0e6 !important;
     }
     .template-salon {
-        background-color: #faf5ff !important;
+        background: #faf5ff !important;
+    }
+
+    /* No page breaks inside items */
+    .grid-item,
+    .side-entry,
+    .cafe-entry,
+    .iza-entry,
+    .menu-entry,
+    .category-section {
+        page-break-inside: avoid;
+        break-inside: avoid;
     }
 }
