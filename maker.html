@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メニュー作成 | メニューメーカー</title>
-    <meta name="description" content="テンプレートを選んでメニュー項目を入力するだけ。おしゃれなメニュー表を無料で作成・印刷できます。">
+    <meta name="description" content="写真付きメニュー表を無料作成。6種類のプロテンプレートで飲食店・カフェ・サロンのメニューを簡単に。">
     <meta name="robots" content="noindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,12 +25,13 @@
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
             <span id="save-status" style="font-size:0.75rem;color:var(--text-muted);"></span>
+            <button class="btn-mobile-toggle" id="btn-toggle-view" style="display:none;">プレビュー</button>
         </div>
     </nav>
 
     <div class="maker-layout">
         <!-- Editor Panel -->
-        <div class="editor-panel">
+        <div class="editor-panel" id="editor-panel">
             <div class="editor-steps">
 
                 <!-- STEP 1: Template Selection -->
@@ -40,30 +41,35 @@
                         <div class="step-title">テンプレート選択</div>
                     </div>
                     <div class="template-grid" id="template-selector">
-                        <div class="template-option active" data-template="washoku">
-                            <span class="tpl-icon">🏮</span>
-                            <span class="tpl-name">和食・居酒屋風</span>
-                            <span class="tpl-desc">金文字 × 暗色背景</span>
+                        <div class="template-option active" data-template="photo-grid">
+                            <span class="tpl-icon">📷</span>
+                            <span class="tpl-name">写真メイン（グリッド）</span>
+                            <span class="tpl-desc">大きな写真＋名前・価格</span>
+                        </div>
+                        <div class="template-option" data-template="photo-side">
+                            <span class="tpl-icon">📖</span>
+                            <span class="tpl-name">写真＋説明（横並び）</span>
+                            <span class="tpl-desc">写真左・テキスト右</span>
+                        </div>
+                        <div class="template-option" data-template="text-elegant">
+                            <span class="tpl-icon">✨</span>
+                            <span class="tpl-name">テキストメイン</span>
+                            <span class="tpl-desc">高級感・写真なし</span>
                         </div>
                         <div class="template-option" data-template="cafe">
                             <span class="tpl-icon">☕</span>
                             <span class="tpl-name">カフェ風</span>
-                            <span class="tpl-desc">クリーム × 手書き感</span>
+                            <span class="tpl-desc">ナチュラル・丸写真</span>
                         </div>
-                        <div class="template-option" data-template="modern">
-                            <span class="tpl-icon">◻️</span>
-                            <span class="tpl-name">モダン</span>
-                            <span class="tpl-desc">白黒ミニマル</span>
-                        </div>
-                        <div class="template-option" data-template="elegant">
-                            <span class="tpl-icon">✨</span>
-                            <span class="tpl-name">エレガント</span>
-                            <span class="tpl-desc">チャコール × ゴールド</span>
+                        <div class="template-option" data-template="izakaya">
+                            <span class="tpl-icon">🏮</span>
+                            <span class="tpl-name">居酒屋風（和風）</span>
+                            <span class="tpl-desc">暗背景・筆文字風</span>
                         </div>
                         <div class="template-option" data-template="salon">
                             <span class="tpl-icon">💅</span>
-                            <span class="tpl-name">サロン</span>
-                            <span class="tpl-desc">パステル × やわらか</span>
+                            <span class="tpl-name">サロン・美容室</span>
+                            <span class="tpl-desc">パステル・サービス一覧</span>
                         </div>
                     </div>
                 </div>
@@ -76,32 +82,45 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">店名 *</label>
-                        <input type="text" class="form-input" id="shop-name" placeholder="例：和食処 匠" maxlength="30">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">ロゴ / アイコン</label>
-                        <div class="icon-selector" id="icon-selector">
-                            <div class="icon-option active" data-icon="">なし</div>
-                            <div class="icon-option" data-icon="🍺">🍺</div>
-                            <div class="icon-option" data-icon="🍣">🍣</div>
-                            <div class="icon-option" data-icon="🍜">🍜</div>
-                            <div class="icon-option" data-icon="🍱">🍱</div>
-                            <div class="icon-option" data-icon="🍕">🍕</div>
-                            <div class="icon-option" data-icon="🍖">🍖</div>
-                            <div class="icon-option" data-icon="🍰">🍰</div>
-                            <div class="icon-option" data-icon="☕">☕</div>
-                            <div class="icon-option" data-icon="🍷">🍷</div>
-                            <div class="icon-option" data-icon="🍸">🍸</div>
-                            <div class="icon-option" data-icon="🍶">🍶</div>
-                            <div class="icon-option" data-icon="💇‍♀️">💇‍♀️</div>
-                            <div class="icon-option" data-icon="💅">💅</div>
-                            <div class="icon-option" data-icon="💆">💆</div>
-                            <div class="icon-option" data-icon="🌸">🌸</div>
-                        </div>
+                        <input type="text" class="form-input" id="shop-name" placeholder="例：和食処 匠" maxlength="40">
                     </div>
                     <div class="form-group">
                         <label class="form-label">サブタイトル（任意）</label>
                         <input type="text" class="form-input" id="shop-subtitle" placeholder="例：創業1985年 / Season Menu">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ロゴ / 店舗写真（任意）</label>
+                        <div class="logo-upload-area" id="logo-upload-area">
+                            <div class="logo-preview" id="logo-preview" style="display:none;">
+                                <img id="logo-preview-img" src="" alt="ロゴ">
+                                <button class="btn-remove-photo" onclick="removeLogo()" title="削除">&times;</button>
+                            </div>
+                            <div class="logo-placeholder" id="logo-placeholder">
+                                <span>📷 クリックまたはドラッグして画像をアップロード</span>
+                                <input type="file" id="logo-input" accept="image/*" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label">営業時間（任意）</label>
+                            <input type="text" class="form-input" id="shop-hours" placeholder="例：11:00〜22:00">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label">電話番号（任意）</label>
+                            <input type="text" class="form-input" id="shop-phone" placeholder="例：03-1234-5678">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">SNS / Instagram（任意）</label>
+                        <input type="text" class="form-input" id="shop-sns" placeholder="例：@shopname">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">税表示</label>
+                        <div class="tax-toggle">
+                            <button class="tax-btn active" data-tax="included" id="tax-included">税込</button>
+                            <button class="tax-btn" data-tax="excluded" id="tax-excluded">税抜</button>
+                        </div>
                     </div>
                 </div>
 
@@ -119,13 +138,21 @@
                     </button>
                 </div>
 
-                <!-- STEP 4: Download -->
+                <!-- STEP 4: Output Options -->
                 <div class="step-section">
                     <div class="step-header">
                         <div class="step-num">4</div>
-                        <div class="step-title">プレビュー & ダウンロード</div>
+                        <div class="step-title">出力オプション</div>
                     </div>
-                    <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div class="form-group">
+                        <label class="form-label">用紙サイズ</label>
+                        <div class="size-toggle">
+                            <button class="size-btn active" data-size="a4-portrait" id="size-a4p">A4 縦</button>
+                            <button class="size-btn" data-size="a4-landscape" id="size-a4l">A4 横</button>
+                            <button class="size-btn" data-size="a3-portrait" id="size-a3p">A3 縦</button>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px;">
                         <button class="btn-secondary btn-full" onclick="window.print()">
                             🖨️ ブラウザで印刷（無料）
                         </button>
@@ -133,10 +160,10 @@
                             📷 画像ダウンロード（無料）
                         </button>
                         <button class="btn-primary btn-full" id="btn-pdf-download" style="background:linear-gradient(135deg,#c9a84c,#a08530);">
-                            📄 高解像度PDF（¥500）
+                            📄 透かしなし高解像度 ¥500
                         </button>
                         <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">
-                            無料印刷にはウォーターマークは含まれません
+                            無料版にはウォーターマークが含まれます
                         </p>
                     </div>
                 </div>
@@ -144,33 +171,38 @@
         </div>
 
         <!-- Preview Panel -->
-        <div class="preview-panel">
+        <div class="preview-panel" id="preview-panel">
             <div class="preview-actions">
                 <button class="btn-secondary" onclick="window.print()">🖨️ 印刷</button>
                 <button class="btn-secondary" onclick="downloadImage()">📷 画像保存</button>
             </div>
-            <div class="preview-container" id="preview-container">
-                <div class="menu-template template-washoku" id="menu-preview">
-                    <div class="menu-header">
-                        <div class="shop-icon" id="preview-icon"></div>
-                        <h1 class="shop-name" id="preview-name">店名を入力してください</h1>
-                        <p class="shop-subtitle" id="preview-subtitle"></p>
+            <div class="preview-scaler" id="preview-scaler">
+                <div class="preview-container" id="preview-container">
+                    <div class="menu-template template-photo-grid page-a4-portrait" id="menu-preview">
+                        <div class="menu-header" id="preview-header">
+                            <div class="shop-logo" id="preview-logo" style="display:none;"></div>
+                            <h1 class="shop-name" id="preview-name">店名を入力してください</h1>
+                            <p class="shop-subtitle" id="preview-subtitle"></p>
+                        </div>
+                        <div class="menu-body" id="preview-body">
+                            <!-- Menu items rendered here -->
+                        </div>
+                        <div class="menu-footer" id="preview-footer" style="display:none;">
+                            <div class="footer-info" id="preview-footer-info"></div>
+                        </div>
                     </div>
-                    <div class="menu-body" id="preview-body">
-                        <!-- Menu items rendered here -->
-                    </div>
+                    <div class="watermark">Powered by メニューメーカー</div>
                 </div>
-                <div class="watermark">Powered by メニューメーカー</div>
             </div>
         </div>
     </div>
 
     <!-- Payment Modal -->
-    <div id="payment-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:center;justify-content:center;">
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;max-width:480px;width:90%;text-align:center;">
-            <h3 style="margin-bottom:16px;">📄 高解像度PDFダウンロード</h3>
+    <div id="payment-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>📄 高解像度ダウンロード</h3>
             <p style="color:var(--text-secondary);margin-bottom:24px;font-size:0.9rem;">
-                印刷所入稿にも対応した高品質PDFをダウンロードできます。<br>ウォーターマークなし。
+                印刷所入稿にも対応した高品質画像をダウンロードできます。<br>ウォーターマークなし。
             </p>
             <div style="font-size:2.5rem;font-weight:800;color:var(--accent-light);margin-bottom:24px;">¥500</div>
             <div id="payment" style="margin-bottom:16px;">
@@ -186,22 +218,37 @@
 
     <script>
     // ============================================
-    // MENU MAKER - Main Application Logic
+    // MENU MAKER PRO - Full Application
     // ============================================
 
     // --- State ---
     let state = {
-        template: 'washoku',
+        template: 'photo-grid',
+        pageSize: 'a4-portrait',
         shopName: '',
-        shopIcon: '',
         shopSubtitle: '',
+        shopLogo: '',
+        shopHours: '',
+        shopPhone: '',
+        shopSns: '',
+        taxDisplay: 'included',
         categories: []
     };
+
+    // --- Utility ---
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function generateId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
 
     // --- Load from localStorage ---
     function loadState() {
         try {
-            const saved = localStorage.getItem('menumaker_state');
+            const saved = localStorage.getItem('menumaker_pro_state');
             if (saved) {
                 const parsed = JSON.parse(saved);
                 state = { ...state, ...parsed };
@@ -210,28 +257,33 @@
             console.warn('Failed to load state:', e);
         }
 
-        // Default categories if empty
         if (state.categories.length === 0) {
             state.categories = [
                 {
+                    id: generateId(),
                     name: '前菜・一品料理',
+                    desc: '',
                     items: [
-                        { name: '枝豆', price: '380', desc: '' },
-                        { name: '冷やしトマト', price: '450', desc: '' }
+                        { id: generateId(), name: '枝豆', price: '380', desc: '塩茹でした新鮮な枝豆', photo: '' },
+                        { id: generateId(), name: '冷やしトマト', price: '450', desc: '', photo: '' }
                     ]
                 },
                 {
+                    id: generateId(),
                     name: 'メイン',
+                    desc: '',
                     items: [
-                        { name: '本日の刺身盛り合わせ', price: '1,800', desc: '旬の魚を五種盛りで' },
-                        { name: '和牛ステーキ', price: '2,800', desc: '' }
+                        { id: generateId(), name: '本日の刺身盛り合わせ', price: '1,800', desc: '旬の魚を五種盛りで', photo: '' },
+                        { id: generateId(), name: '和牛ステーキ', price: '2,800', desc: '特選A5和牛150g', photo: '' }
                     ]
                 },
                 {
+                    id: generateId(),
                     name: 'ドリンク',
+                    desc: '',
                     items: [
-                        { name: '生ビール', price: '550', desc: '' },
-                        { name: '日本酒（一合）', price: '680', desc: '' }
+                        { id: generateId(), name: '生ビール', price: '550', desc: '', photo: '' },
+                        { id: generateId(), name: '日本酒（一合）', price: '680', desc: '厳選地酒各種', photo: '' }
                     ]
                 }
             ];
@@ -241,20 +293,102 @@
     // --- Save to localStorage ---
     function saveState() {
         try {
-            localStorage.setItem('menumaker_state', JSON.stringify(state));
+            localStorage.setItem('menumaker_pro_state', JSON.stringify(state));
             const el = document.getElementById('save-status');
-            el.textContent = '✓ 保存済み';
+            el.textContent = '自動保存済み';
             setTimeout(() => { el.textContent = ''; }, 2000);
         } catch (e) {
+            if (e.name === 'QuotaExceededError') {
+                alert('保存容量を超えました。写真の数を減らしてください。');
+            }
             console.warn('Failed to save state:', e);
         }
     }
 
-    // Debounced save
     let saveTimeout;
     function debouncedSave() {
         clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(saveState, 500);
+        saveTimeout = setTimeout(saveState, 600);
+    }
+
+    // --- Photo handling ---
+    function readFileAsBase64(file, maxWidth) {
+        return new Promise((resolve, reject) => {
+            if (!file.type.startsWith('image/')) {
+                reject(new Error('画像ファイルを選択してください'));
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const mw = maxWidth || 600;
+                    let w = img.width, h = img.height;
+                    if (w > mw) { h = h * mw / w; w = mw; }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    resolve(canvas.toDataURL('image/jpeg', 0.75));
+                };
+                img.onerror = reject;
+                img.src = e.target.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // --- Logo Upload ---
+    const logoArea = document.getElementById('logo-upload-area');
+    const logoInput = document.getElementById('logo-input');
+    const logoPlaceholder = document.getElementById('logo-placeholder');
+
+    logoPlaceholder.addEventListener('click', () => logoInput.click());
+    logoArea.addEventListener('dragover', (e) => { e.preventDefault(); logoArea.classList.add('drag-over'); });
+    logoArea.addEventListener('dragleave', () => logoArea.classList.remove('drag-over'));
+    logoArea.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        logoArea.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file) await handleLogoFile(file);
+    });
+    logoInput.addEventListener('change', async (e) => {
+        if (e.target.files[0]) await handleLogoFile(e.target.files[0]);
+    });
+
+    async function handleLogoFile(file) {
+        try {
+            state.shopLogo = await readFileAsBase64(file, 300);
+            updateLogoPreview();
+            renderPreview();
+            debouncedSave();
+        } catch (err) {
+            alert(err.message || '画像の読み込みに失敗しました');
+        }
+    }
+
+    function updateLogoPreview() {
+        const preview = document.getElementById('logo-preview');
+        const img = document.getElementById('logo-preview-img');
+        const placeholder = document.getElementById('logo-placeholder');
+        if (state.shopLogo) {
+            img.src = state.shopLogo;
+            preview.style.display = 'flex';
+            placeholder.style.display = 'none';
+        } else {
+            preview.style.display = 'none';
+            placeholder.style.display = 'flex';
+        }
+    }
+
+    function removeLogo() {
+        state.shopLogo = '';
+        logoInput.value = '';
+        updateLogoPreview();
+        renderPreview();
+        debouncedSave();
     }
 
     // --- Template Selection ---
@@ -268,157 +402,179 @@
         debouncedSave();
     });
 
-    // --- Icon Selection ---
-    document.getElementById('icon-selector').addEventListener('click', (e) => {
-        const option = e.target.closest('.icon-option');
-        if (!option) return;
-        document.querySelectorAll('.icon-option').forEach(el => el.classList.remove('active'));
-        option.classList.add('active');
-        state.shopIcon = option.dataset.icon;
+    // --- Tax Toggle ---
+    document.getElementById('tax-included').addEventListener('click', () => {
+        state.taxDisplay = 'included';
+        document.getElementById('tax-included').classList.add('active');
+        document.getElementById('tax-excluded').classList.remove('active');
         renderPreview();
         debouncedSave();
+    });
+    document.getElementById('tax-excluded').addEventListener('click', () => {
+        state.taxDisplay = 'excluded';
+        document.getElementById('tax-excluded').classList.add('active');
+        document.getElementById('tax-included').classList.remove('active');
+        renderPreview();
+        debouncedSave();
+    });
+
+    // --- Page Size Toggle ---
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.pageSize = btn.dataset.size;
+            renderPreview();
+            scalePreview();
+            debouncedSave();
+        });
     });
 
     // --- Shop Info Inputs ---
-    document.getElementById('shop-name').addEventListener('input', (e) => {
-        state.shopName = e.target.value;
-        renderPreview();
-        debouncedSave();
+    ['shop-name', 'shop-subtitle', 'shop-hours', 'shop-phone', 'shop-sns'].forEach(id => {
+        const el = document.getElementById(id);
+        const key = id.replace('shop-', 'shop').replace(/-([a-z])/g, (m, c) => c.toUpperCase());
+        const stateKey = key.replace('shop', 'shop');
+        const map = {
+            'shopname': 'shopName', 'shopsubtitle': 'shopSubtitle',
+            'shophours': 'shopHours', 'shopphone': 'shopPhone', 'shopsns': 'shopSns'
+        };
+        el.addEventListener('input', (e) => {
+            state[map[stateKey.toLowerCase()]] = e.target.value;
+            renderPreview();
+            debouncedSave();
+        });
     });
 
-    document.getElementById('shop-subtitle').addEventListener('input', (e) => {
-        state.shopSubtitle = e.target.value;
-        renderPreview();
-        debouncedSave();
-    });
-
-    // --- Category Management ---
+    // --- Category & Item Management ---
     function renderCategories() {
         const container = document.getElementById('categories-container');
         container.innerHTML = '';
 
-        state.categories.forEach((cat, catIndex) => {
+        state.categories.forEach((cat, ci) => {
             const block = document.createElement('div');
             block.className = 'category-block';
+            block.setAttribute('data-cat-index', ci);
+
+            let itemsHtml = '';
+            cat.items.forEach((item, ii) => {
+                const photoThumb = item.photo
+                    ? `<div class="item-photo-thumb"><img src="${item.photo}" alt=""><button class="btn-remove-photo-sm" onclick="removeItemPhoto(${ci},${ii})">&times;</button></div>`
+                    : `<label class="item-photo-add" title="写真を追加"><span>📷</span><input type="file" accept="image/*" onchange="handleItemPhoto(${ci},${ii},this)" style="display:none;"></label>`;
+
+                itemsHtml += `
+                    <div class="menu-item-block" data-item-index="${ii}">
+                        <div class="menu-item-row">
+                            ${photoThumb}
+                            <div class="item-fields">
+                                <input type="text" value="${escapeHtml(item.name)}" placeholder="メニュー名"
+                                       oninput="updateItem(${ci},${ii},'name',this.value)">
+                                <div class="item-row-sub">
+                                    <input type="text" value="${escapeHtml(item.price)}" placeholder="価格" class="price-input"
+                                           oninput="updateItem(${ci},${ii},'price',this.value)">
+                                    <input type="text" value="${escapeHtml(item.desc)}" placeholder="説明文（任意）" class="desc-input"
+                                           oninput="updateItem(${ci},${ii},'desc',this.value)">
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn-icon" onclick="moveItemUp(${ci},${ii})" title="上へ">&#x2191;</button>
+                                <button class="btn-icon" onclick="moveItemDown(${ci},${ii})" title="下へ">&#x2193;</button>
+                                <button class="btn-icon delete" onclick="deleteItem(${ci},${ii})" title="削除">&#x2715;</button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
             block.innerHTML = `
                 <div class="category-header">
                     <input type="text" value="${escapeHtml(cat.name)}" placeholder="カテゴリ名"
-                           onchange="updateCategoryName(${catIndex}, this.value)"
-                           oninput="updateCategoryName(${catIndex}, this.value)">
-                    <button class="btn-icon" onclick="moveCategoryUp(${catIndex})" title="上へ">↑</button>
-                    <button class="btn-icon" onclick="moveCategoryDown(${catIndex})" title="下へ">↓</button>
-                    <button class="btn-icon delete" onclick="deleteCategory(${catIndex})" title="削除">✕</button>
+                           oninput="updateCategoryName(${ci},this.value)">
+                    <button class="btn-icon" onclick="moveCategoryUp(${ci})" title="上へ">&#x2191;</button>
+                    <button class="btn-icon" onclick="moveCategoryDown(${ci})" title="下へ">&#x2193;</button>
+                    <button class="btn-icon delete" onclick="deleteCategory(${ci})" title="削除">&#x2715;</button>
+                </div>
+                <div class="category-desc-row">
+                    <input type="text" value="${escapeHtml(cat.desc || '')}" placeholder="カテゴリ説明（任意）"
+                           oninput="updateCategoryDesc(${ci},this.value)">
                 </div>
                 <div class="category-items">
-                    ${cat.items.map((item, itemIndex) => `
-                        <div>
-                            <div class="menu-item-row">
-                                <input type="text" value="${escapeHtml(item.name)}" placeholder="メニュー名"
-                                       oninput="updateItem(${catIndex}, ${itemIndex}, 'name', this.value)">
-                                <input type="text" value="${escapeHtml(item.price)}" placeholder="価格"
-                                       oninput="updateItem(${catIndex}, ${itemIndex}, 'price', this.value)">
-                                <div class="item-actions">
-                                    <button class="btn-icon" onclick="moveItemUp(${catIndex}, ${itemIndex})" title="上へ">↑</button>
-                                    <button class="btn-icon" onclick="moveItemDown(${catIndex}, ${itemIndex})" title="下へ">↓</button>
-                                    <button class="btn-icon delete" onclick="deleteItem(${catIndex}, ${itemIndex})" title="削除">✕</button>
-                                </div>
-                            </div>
-                            <div class="item-desc-row">
-                                <input type="text" value="${escapeHtml(item.desc)}" placeholder="説明文（任意）"
-                                       oninput="updateItem(${catIndex}, ${itemIndex}, 'desc', this.value)">
-                            </div>
-                        </div>
-                    `).join('')}
-                    <button class="btn-add-item" onclick="addItem(${catIndex})">＋ メニュー項目を追加</button>
-                </div>
-            `;
+                    ${itemsHtml}
+                    <button class="btn-add-item" onclick="addItem(${ci})">＋ メニュー項目を追加</button>
+                </div>`;
             container.appendChild(block);
         });
     }
 
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
+    function updateCategoryName(ci, val) { state.categories[ci].name = val; renderPreview(); debouncedSave(); }
+    function updateCategoryDesc(ci, val) { state.categories[ci].desc = val; renderPreview(); debouncedSave(); }
 
-    function updateCategoryName(catIndex, value) {
-        state.categories[catIndex].name = value;
-        renderPreview();
-        debouncedSave();
-    }
-
-    function deleteCategory(catIndex) {
+    function deleteCategory(ci) {
         if (state.categories.length <= 1) return;
         if (!confirm('このカテゴリを削除しますか？')) return;
-        state.categories.splice(catIndex, 1);
-        renderCategories();
-        renderPreview();
-        debouncedSave();
+        state.categories.splice(ci, 1);
+        renderCategories(); renderPreview(); debouncedSave();
+    }
+    function moveCategoryUp(ci) {
+        if (ci === 0) return;
+        [state.categories[ci-1], state.categories[ci]] = [state.categories[ci], state.categories[ci-1]];
+        renderCategories(); renderPreview(); debouncedSave();
+    }
+    function moveCategoryDown(ci) {
+        if (ci >= state.categories.length - 1) return;
+        [state.categories[ci], state.categories[ci+1]] = [state.categories[ci+1], state.categories[ci]];
+        renderCategories(); renderPreview(); debouncedSave();
     }
 
-    function moveCategoryUp(catIndex) {
-        if (catIndex === 0) return;
-        [state.categories[catIndex - 1], state.categories[catIndex]] =
-            [state.categories[catIndex], state.categories[catIndex - 1]];
+    function addItem(ci) {
+        state.categories[ci].items.push({ id: generateId(), name: '', price: '', desc: '', photo: '' });
         renderCategories();
-        renderPreview();
-        debouncedSave();
-    }
-
-    function moveCategoryDown(catIndex) {
-        if (catIndex >= state.categories.length - 1) return;
-        [state.categories[catIndex], state.categories[catIndex + 1]] =
-            [state.categories[catIndex + 1], state.categories[catIndex]];
-        renderCategories();
-        renderPreview();
-        debouncedSave();
-    }
-
-    function addItem(catIndex) {
-        state.categories[catIndex].items.push({ name: '', price: '', desc: '' });
-        renderCategories();
-        // Focus the new item's name input
         const blocks = document.querySelectorAll('.category-block');
-        const items = blocks[catIndex].querySelectorAll('.menu-item-row input[placeholder="メニュー名"]');
-        if (items.length) items[items.length - 1].focus();
+        const inputs = blocks[ci].querySelectorAll('.item-fields input[placeholder="メニュー名"]');
+        if (inputs.length) inputs[inputs.length - 1].focus();
         debouncedSave();
     }
 
-    function updateItem(catIndex, itemIndex, field, value) {
-        state.categories[catIndex].items[itemIndex][field] = value;
-        renderPreview();
-        debouncedSave();
+    function updateItem(ci, ii, field, val) {
+        state.categories[ci].items[ii][field] = val;
+        renderPreview(); debouncedSave();
     }
 
-    function deleteItem(catIndex, itemIndex) {
-        state.categories[catIndex].items.splice(itemIndex, 1);
-        renderCategories();
-        renderPreview();
-        debouncedSave();
+    function deleteItem(ci, ii) {
+        state.categories[ci].items.splice(ii, 1);
+        renderCategories(); renderPreview(); debouncedSave();
+    }
+    function moveItemUp(ci, ii) {
+        if (ii === 0) return;
+        const items = state.categories[ci].items;
+        [items[ii-1], items[ii]] = [items[ii], items[ii-1]];
+        renderCategories(); renderPreview(); debouncedSave();
+    }
+    function moveItemDown(ci, ii) {
+        const items = state.categories[ci].items;
+        if (ii >= items.length - 1) return;
+        [items[ii], items[ii+1]] = [items[ii+1], items[ii]];
+        renderCategories(); renderPreview(); debouncedSave();
     }
 
-    function moveItemUp(catIndex, itemIndex) {
-        if (itemIndex === 0) return;
-        const items = state.categories[catIndex].items;
-        [items[itemIndex - 1], items[itemIndex]] = [items[itemIndex], items[itemIndex - 1]];
-        renderCategories();
-        renderPreview();
-        debouncedSave();
+    async function handleItemPhoto(ci, ii, input) {
+        const file = input.files[0];
+        if (!file) return;
+        try {
+            state.categories[ci].items[ii].photo = await readFileAsBase64(file, 500);
+            renderCategories(); renderPreview(); debouncedSave();
+        } catch (err) {
+            alert(err.message || '画像の読み込みに失敗しました');
+        }
     }
 
-    function moveItemDown(catIndex, itemIndex) {
-        const items = state.categories[catIndex].items;
-        if (itemIndex >= items.length - 1) return;
-        [items[itemIndex], items[itemIndex + 1]] = [items[itemIndex + 1], items[itemIndex]];
-        renderCategories();
-        renderPreview();
-        debouncedSave();
+    function removeItemPhoto(ci, ii) {
+        state.categories[ci].items[ii].photo = '';
+        renderCategories(); renderPreview(); debouncedSave();
     }
 
     document.getElementById('btn-add-category').addEventListener('click', () => {
-        state.categories.push({ name: '', items: [{ name: '', price: '', desc: '' }] });
+        state.categories.push({ id: generateId(), name: '', desc: '', items: [{ id: generateId(), name: '', price: '', desc: '', photo: '' }] });
         renderCategories();
-        // Focus the new category name input
         const blocks = document.querySelectorAll('.category-block');
         if (blocks.length) {
             const input = blocks[blocks.length - 1].querySelector('.category-header input');
@@ -430,62 +586,205 @@
     // --- Preview Rendering ---
     function renderPreview() {
         const preview = document.getElementById('menu-preview');
+        const tpl = state.template;
 
-        // Update template class
-        preview.className = `menu-template template-${state.template}`;
+        // Update template + page classes
+        preview.className = `menu-template template-${tpl} page-${state.pageSize}`;
 
-        // Update header
-        const iconEl = document.getElementById('preview-icon');
+        // Header
+        const logoEl = document.getElementById('preview-logo');
         const nameEl = document.getElementById('preview-name');
         const subEl = document.getElementById('preview-subtitle');
 
-        iconEl.textContent = state.shopIcon || '';
-        iconEl.style.display = state.shopIcon ? 'block' : 'none';
+        if (state.shopLogo) {
+            logoEl.innerHTML = `<img src="${state.shopLogo}" alt="ロゴ">`;
+            logoEl.style.display = 'block';
+        } else {
+            logoEl.style.display = 'none';
+        }
+
         nameEl.textContent = state.shopName || '店名を入力してください';
         subEl.textContent = state.shopSubtitle || '';
         subEl.style.display = state.shopSubtitle ? 'block' : 'none';
 
-        // Update body
+        // Tax label
+        const taxLabel = state.taxDisplay === 'included' ? '（税込）' : '（税抜）';
+
+        // Body
         const body = document.getElementById('preview-body');
         let html = '';
 
+        const showPhotos = (tpl !== 'text-elegant' && tpl !== 'salon');
+
         state.categories.forEach(cat => {
             if (!cat.name && cat.items.every(i => !i.name)) return;
+
             html += '<div class="category-section">';
             if (cat.name) {
                 html += `<div class="category-title">${escapeHtml(cat.name)}</div>`;
             }
-            cat.items.forEach(item => {
-                if (!item.name && !item.price) return;
-                html += '<div class="menu-entry">';
-                html += '<div class="entry-info">';
-                html += `<span class="entry-name">${escapeHtml(item.name) || '&nbsp;'}</span>`;
-                if (item.desc) {
-                    html += `<span class="entry-desc">${escapeHtml(item.desc)}</span>`;
-                }
+            if (cat.desc) {
+                html += `<div class="category-desc">${escapeHtml(cat.desc)}</div>`;
+            }
+
+            if (tpl === 'photo-grid') {
+                html += '<div class="grid-items">';
+                cat.items.forEach(item => {
+                    if (!item.name && !item.price) return;
+                    html += '<div class="grid-item">';
+                    if (item.photo) {
+                        html += `<div class="grid-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                    } else {
+                        html += '<div class="grid-photo grid-photo-empty"><span>No Photo</span></div>';
+                    }
+                    html += '<div class="grid-info">';
+                    html += `<span class="grid-name">${escapeHtml(item.name)}</span>`;
+                    if (item.desc) html += `<span class="grid-desc">${escapeHtml(item.desc)}</span>`;
+                    if (item.price) {
+                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                        html += `<span class="grid-price">${escapeHtml(p)}</span>`;
+                    }
+                    html += '</div></div>';
+                });
                 html += '</div>';
-                if (item.price) {
-                    html += '<span class="dot-leader"></span>';
-                    const priceText = item.price.startsWith('¥') ? item.price : `¥${item.price}`;
-                    html += `<span class="entry-price">${escapeHtml(priceText)}</span>`;
-                }
-                html += '</div>';
-            });
+            } else if (tpl === 'photo-side') {
+                cat.items.forEach(item => {
+                    if (!item.name && !item.price) return;
+                    html += '<div class="side-entry">';
+                    if (item.photo) {
+                        html += `<div class="side-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                    }
+                    html += '<div class="side-info">';
+                    html += `<span class="side-name">${escapeHtml(item.name)}</span>`;
+                    if (item.desc) html += `<span class="side-desc">${escapeHtml(item.desc)}</span>`;
+                    html += '</div>';
+                    if (item.price) {
+                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                        html += `<span class="side-price">${escapeHtml(p)}</span>`;
+                    }
+                    html += '</div>';
+                });
+            } else if (tpl === 'cafe') {
+                cat.items.forEach(item => {
+                    if (!item.name && !item.price) return;
+                    html += '<div class="cafe-entry">';
+                    if (item.photo) {
+                        html += `<div class="cafe-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                    }
+                    html += '<div class="cafe-info">';
+                    html += `<span class="cafe-name">${escapeHtml(item.name)}</span>`;
+                    if (item.desc) html += `<span class="cafe-desc">${escapeHtml(item.desc)}</span>`;
+                    html += '</div>';
+                    if (item.price) {
+                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                        html += `<span class="cafe-price">${escapeHtml(p)}</span>`;
+                    }
+                    html += '</div>';
+                });
+            } else if (tpl === 'izakaya') {
+                cat.items.forEach(item => {
+                    if (!item.name && !item.price) return;
+                    html += '<div class="iza-entry">';
+                    if (item.photo) {
+                        html += `<div class="iza-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                    }
+                    html += '<div class="iza-info">';
+                    html += `<span class="iza-name">${escapeHtml(item.name)}</span>`;
+                    if (item.desc) html += `<span class="iza-desc">${escapeHtml(item.desc)}</span>`;
+                    html += '</div>';
+                    if (item.price) {
+                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                        html += `<span class="iza-price">${escapeHtml(p)}</span>`;
+                    }
+                    html += '</div>';
+                });
+            } else {
+                // text-elegant, salon - classic list
+                cat.items.forEach(item => {
+                    if (!item.name && !item.price) return;
+                    html += '<div class="menu-entry">';
+                    html += '<div class="entry-info">';
+                    html += `<span class="entry-name">${escapeHtml(item.name) || '&nbsp;'}</span>`;
+                    if (item.desc) html += `<span class="entry-desc">${escapeHtml(item.desc)}</span>`;
+                    html += '</div>';
+                    if (item.price) {
+                        html += '<span class="dot-leader"></span>';
+                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                        html += `<span class="entry-price">${escapeHtml(p)}</span>`;
+                    }
+                    html += '</div>';
+                });
+            }
+
             html += '</div>';
         });
 
+        // Tax note
+        html += `<div class="tax-note">※ 表示価格は全て${state.taxDisplay === 'included' ? '税込' : '税抜'}です</div>`;
+
         body.innerHTML = html;
+
+        // Footer
+        const footer = document.getElementById('preview-footer');
+        const footerInfo = document.getElementById('preview-footer-info');
+        const parts = [];
+        if (state.shopHours) parts.push(state.shopHours);
+        if (state.shopPhone) parts.push('TEL: ' + state.shopPhone);
+        if (state.shopSns) parts.push(state.shopSns);
+        if (parts.length > 0) {
+            footerInfo.textContent = parts.join('  |  ');
+            footer.style.display = 'block';
+        } else {
+            footer.style.display = 'none';
+        }
+    }
+
+    // --- Preview Scaling ---
+    function scalePreview() {
+        const scaler = document.getElementById('preview-scaler');
+        const container = document.getElementById('preview-container');
+        const panel = document.getElementById('preview-panel');
+
+        const panelWidth = panel.clientWidth - 64;
+        const panelHeight = panel.clientHeight - 120;
+
+        let pageW, pageH;
+        switch (state.pageSize) {
+            case 'a4-portrait':  pageW = 794; pageH = 1123; break;
+            case 'a4-landscape': pageW = 1123; pageH = 794; break;
+            case 'a3-portrait':  pageW = 1123; pageH = 1587; break;
+            default:             pageW = 794; pageH = 1123;
+        }
+
+        container.style.width = pageW + 'px';
+        container.style.minHeight = pageH + 'px';
+
+        const scaleX = panelWidth / pageW;
+        const scaleY = panelHeight / pageH;
+        const scale = Math.min(scaleX, scaleY, 1);
+
+        scaler.style.transform = `scale(${scale})`;
+        scaler.style.transformOrigin = 'top center';
+        scaler.style.width = pageW + 'px';
+        scaler.style.margin = '0 auto';
     }
 
     // --- Image Download ---
     async function downloadImage() {
         const container = document.getElementById('preview-container');
+        const scaler = document.getElementById('preview-scaler');
+        // Temporarily reset scale for full-res capture
+        const origTransform = scaler.style.transform;
+        scaler.style.transform = 'none';
+
         try {
             const canvas = await html2canvas(container, {
                 scale: 2,
                 useCORS: true,
                 backgroundColor: null,
-                logging: false
+                logging: false,
+                width: container.offsetWidth,
+                height: container.offsetHeight
             });
             const link = document.createElement('a');
             link.download = `menu_${state.shopName || 'menu'}_${Date.now()}.png`;
@@ -494,39 +793,66 @@
         } catch (err) {
             console.error('Download failed:', err);
             alert('画像の生成に失敗しました。もう一度お試しください。');
+        } finally {
+            scaler.style.transform = origTransform;
         }
     }
 
-    // --- PDF Payment Modal ---
+    // --- Payment Modal ---
     document.getElementById('btn-pdf-download').addEventListener('click', () => {
-        const modal = document.getElementById('payment-modal');
-        modal.style.display = 'flex';
+        document.getElementById('payment-modal').style.display = 'flex';
     });
-
     function closePaymentModal() {
         document.getElementById('payment-modal').style.display = 'none';
     }
-
-    // Close modal on backdrop click
     document.getElementById('payment-modal').addEventListener('click', (e) => {
         if (e.target === e.currentTarget) closePaymentModal();
     });
 
-    // --- Restore state on load ---
+    // --- Mobile Toggle ---
+    const btnToggle = document.getElementById('btn-toggle-view');
+    let showingPreview = false;
+    function checkMobile() {
+        const isMobile = window.innerWidth <= 900;
+        btnToggle.style.display = isMobile ? 'block' : 'none';
+        if (!isMobile) {
+            document.getElementById('editor-panel').style.display = '';
+            document.getElementById('preview-panel').style.display = '';
+            showingPreview = false;
+            btnToggle.textContent = 'プレビュー';
+        }
+    }
+    btnToggle.addEventListener('click', () => {
+        showingPreview = !showingPreview;
+        document.getElementById('editor-panel').style.display = showingPreview ? 'none' : '';
+        document.getElementById('preview-panel').style.display = showingPreview ? '' : 'none';
+        btnToggle.textContent = showingPreview ? '編集に戻る' : 'プレビュー';
+        if (showingPreview) scalePreview();
+    });
+    window.addEventListener('resize', () => {
+        checkMobile();
+        scalePreview();
+    });
+
+    // --- Restore UI from state ---
     function restoreUI() {
-        // Template
         document.querySelectorAll('.template-option').forEach(el => {
             el.classList.toggle('active', el.dataset.template === state.template);
         });
-
-        // Icon
-        document.querySelectorAll('.icon-option').forEach(el => {
-            el.classList.toggle('active', el.dataset.icon === state.shopIcon);
-        });
-
-        // Shop info
         document.getElementById('shop-name').value = state.shopName;
         document.getElementById('shop-subtitle').value = state.shopSubtitle;
+        document.getElementById('shop-hours').value = state.shopHours || '';
+        document.getElementById('shop-phone').value = state.shopPhone || '';
+        document.getElementById('shop-sns').value = state.shopSns || '';
+
+        document.getElementById('tax-included').classList.toggle('active', state.taxDisplay === 'included');
+        document.getElementById('tax-excluded').classList.toggle('active', state.taxDisplay === 'excluded');
+
+        document.querySelectorAll('.size-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.size === state.pageSize);
+        });
+
+        updateLogoPreview();
     }
 
     // --- Initialize ---
@@ -534,6 +860,8 @@
     restoreUI();
     renderCategories();
     renderPreview();
+    checkMobile();
+    setTimeout(scalePreview, 50);
     </script>
 </body>
 </html>

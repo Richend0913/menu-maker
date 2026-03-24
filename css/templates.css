@@ -1,29 +1,44 @@
 /* ============================================
-   MENU TEMPLATE STYLES
-   Applied to .preview-container based on active template
+   MENU TEMPLATE STYLES - PRO Edition
+   6 Templates with Photo Support
    ============================================ */
+
+/* --- Page Sizes --- */
+.page-a4-portrait  { width: 794px; min-height: 1123px; }
+.page-a4-landscape { width: 1123px; min-height: 794px; }
+.page-a3-portrait  { width: 1123px; min-height: 1587px; }
 
 /* --- Shared Base --- */
 .menu-template {
     padding: 48px 40px;
-    min-height: 900px;
+    position: relative;
+    overflow: hidden;
 }
 
 .menu-template .menu-header {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
 }
 
-.menu-template .shop-icon {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 8px;
+.menu-template .shop-logo {
+    margin: 0 auto 12px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu-template .shop-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .menu-template .shop-name {
     margin-bottom: 6px;
 }
-
 .menu-template .shop-subtitle {
     margin-bottom: 0;
 }
@@ -31,16 +46,40 @@
 .menu-template .menu-body {
     width: 100%;
 }
-
 .menu-template .category-section {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
-
 .menu-template .category-title {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+}
+.menu-template .category-desc {
+    text-align: center;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-bottom: 12px;
 }
 
+.menu-template .tax-note {
+    text-align: center;
+    font-size: 0.65rem;
+    opacity: 0.5;
+    margin-top: 24px;
+    padding-top: 16px;
+}
+
+.menu-template .menu-footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    text-align: center;
+}
+.menu-template .footer-info {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    letter-spacing: 1px;
+}
+
+/* --- Classic list entry (text-elegant, salon) --- */
 .menu-template .menu-entry {
     display: flex;
     justify-content: space-between;
@@ -48,25 +87,10 @@
     margin-bottom: 6px;
     gap: 12px;
 }
-
-.menu-template .entry-info {
-    flex: 1;
-}
-
-.menu-template .entry-name {
-    display: block;
-}
-
-.menu-template .entry-desc {
-    display: block;
-    margin-top: 2px;
-}
-
-.menu-template .entry-price {
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
+.menu-template .entry-info { flex: 1; }
+.menu-template .entry-name { display: block; }
+.menu-template .entry-desc { display: block; margin-top: 2px; }
+.menu-template .entry-price { white-space: nowrap; flex-shrink: 0; }
 .menu-template .dot-leader {
     flex: 1;
     border-bottom: 1px dotted;
@@ -77,446 +101,904 @@
     top: -4px;
 }
 
+
 /* ============================================
-   TEMPLATE: 和食・居酒屋風 (Washoku)
+   TEMPLATE 1: 写真メイン（グリッド） photo-grid
    ============================================ */
-.template-washoku {
-    background: #1a1a2e;
-    color: #d4a04a;
-    font-family: 'Noto Serif JP', 'Shippori Mincho', serif;
-    position: relative;
+.template-photo-grid {
+    background: #ffffff;
+    color: #333;
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
 }
-
-.template-washoku::before {
-    content: '';
-    position: absolute;
-    inset: 12px;
-    border: 1px solid rgba(212, 160, 74, 0.2);
-    pointer-events: none;
-}
-
-.template-washoku::after {
-    content: '';
-    position: absolute;
-    inset: 16px;
-    border: 1px solid rgba(212, 160, 74, 0.1);
-    pointer-events: none;
-}
-
-.template-washoku .shop-icon {
-    color: #d4a04a;
-    filter: drop-shadow(0 0 8px rgba(212, 160, 74, 0.3));
-}
-
-.template-washoku .shop-name {
-    font-size: 2rem;
+.template-photo-grid .shop-name {
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #d4a04a;
-    letter-spacing: 8px;
+    color: #222;
+    letter-spacing: 2px;
 }
-
-.template-washoku .shop-subtitle {
+.template-photo-grid .shop-subtitle {
     font-size: 0.8rem;
-    color: rgba(212, 160, 74, 0.6);
-    letter-spacing: 4px;
+    color: #888;
+    letter-spacing: 2px;
+}
+.template-photo-grid .shop-logo {
+    border: 2px solid #eee;
+}
+.template-photo-grid .category-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 3px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e74c3c;
+    display: inline-block;
+    margin: 0 auto 16px;
+}
+.template-photo-grid .category-section {
+    text-align: center;
+}
+.template-photo-grid .grid-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    text-align: left;
+}
+.template-photo-grid .grid-item {
+    background: #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+.template-photo-grid .grid-photo {
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.template-photo-grid .grid-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.template-photo-grid .grid-photo-empty {
+    color: #ccc;
+    font-size: 0.75rem;
+}
+.template-photo-grid .grid-info {
+    padding: 10px 12px;
+}
+.template-photo-grid .grid-name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #222;
+}
+.template-photo-grid .grid-desc {
+    display: block;
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 2px;
+}
+.template-photo-grid .grid-price {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-top: 4px;
+}
+.template-photo-grid .tax-note {
+    border-top: 1px solid #eee;
+    color: #aaa;
+}
+.template-photo-grid .menu-footer {
+    border-top: 1px solid #eee;
+    color: #aaa;
 }
 
-.template-washoku .menu-header::after {
-    content: '❖';
+/* A4 landscape: 3 columns */
+.page-a4-landscape.template-photo-grid .grid-items {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+/* ============================================
+   TEMPLATE 2: 写真＋説明（横並び） photo-side
+   ============================================ */
+.template-photo-side {
+    background: #fff;
+    color: #333;
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+}
+.template-photo-side .shop-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+.template-photo-side .shop-subtitle {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    letter-spacing: 2px;
+}
+.template-photo-side .shop-logo {
+    border: 2px solid #ecf0f1;
+}
+.template-photo-side .menu-header {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #2c3e50;
+    margin-bottom: 28px;
+}
+.template-photo-side .category-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+.template-photo-side .side-entry {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.template-photo-side .side-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.template-photo-side .side-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.template-photo-side .side-info {
+    flex: 1;
+}
+.template-photo-side .side-name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+.template-photo-side .side-desc {
+    display: block;
+    font-size: 0.72rem;
+    color: #7f8c8d;
+    margin-top: 2px;
+}
+.template-photo-side .side-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2c3e50;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.template-photo-side .tax-note {
+    border-top: 1px solid #eee;
+    color: #bbb;
+}
+.template-photo-side .menu-footer {
+    border-top: 1px solid #eee;
+    color: #999;
+}
+
+
+/* ============================================
+   TEMPLATE 3: テキストメイン（高級感） text-elegant
+   ============================================ */
+.template-text-elegant {
+    background: #1c1c1c;
+    color: #c9a84c;
+    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+}
+.template-text-elegant::before {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    pointer-events: none;
+}
+.template-text-elegant::after {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(201, 168, 76, 0.08);
+    pointer-events: none;
+}
+.template-text-elegant .shop-logo {
+    border: 1px solid rgba(201, 168, 76, 0.3);
+}
+.template-text-elegant .menu-header {
+    padding-bottom: 24px;
+    margin-bottom: 36px;
+}
+.template-text-elegant .menu-header::after {
+    content: '\2014  \2726  \2014';
     display: block;
     margin-top: 16px;
-    font-size: 1.2rem;
-    color: rgba(212, 160, 74, 0.4);
+    font-size: 0.9rem;
+    color: rgba(201, 168, 76, 0.3);
+    letter-spacing: 8px;
 }
-
-.template-washoku .category-title {
-    font-size: 1rem;
+.template-text-elegant .shop-name {
+    font-size: 2.2rem;
     font-weight: 600;
-    color: #d4a04a;
+    color: #c9a84c;
+    letter-spacing: 8px;
+}
+.template-text-elegant .shop-subtitle {
+    font-size: 0.8rem;
+    color: rgba(201, 168, 76, 0.5);
+    letter-spacing: 4px;
+    font-style: italic;
+}
+.template-text-elegant .category-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #c9a84c;
     letter-spacing: 6px;
-    position: relative;
-    padding: 0 20px;
 }
+.template-text-elegant .category-title::before { content: '\2014 '; color: rgba(201,168,76,0.3); }
+.template-text-elegant .category-title::after  { content: ' \2014'; color: rgba(201,168,76,0.3); }
 
-.template-washoku .category-title::before {
-    content: '— ';
-    color: rgba(212, 160, 74, 0.4);
-}
-
-.template-washoku .category-title::after {
-    content: ' —';
-    color: rgba(212, 160, 74, 0.4);
-}
-
-.template-washoku .menu-entry {
+.template-text-elegant .menu-entry {
     padding: 8px 0;
-    border-bottom: 1px solid rgba(212, 160, 74, 0.1);
 }
-
-.template-washoku .entry-name {
+.template-text-elegant .entry-name {
     font-size: 0.95rem;
-    color: #d4a04a;
+    color: #e0d5b0;
 }
-
-.template-washoku .entry-desc {
+.template-text-elegant .entry-desc {
     font-size: 0.72rem;
-    color: rgba(212, 160, 74, 0.5);
+    color: rgba(201, 168, 76, 0.45);
+    font-style: italic;
 }
-
-.template-washoku .entry-price {
+.template-text-elegant .entry-price {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #e8c878;
+    color: #c9a84c;
+}
+.template-text-elegant .dot-leader {
+    border-bottom-color: rgba(201, 168, 76, 0.15);
+}
+.template-text-elegant .tax-note {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    color: rgba(201,168,76,0.35);
+}
+.template-text-elegant .menu-footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    color: rgba(201,168,76,0.4);
 }
 
-.template-washoku .dot-leader {
-    border-bottom-color: rgba(212, 160, 74, 0.15);
-}
 
 /* ============================================
-   TEMPLATE: カフェ風 (Cafe)
+   TEMPLATE 4: カフェ風（ナチュラル） cafe
    ============================================ */
 .template-cafe {
     background: #f5f0e6;
     color: #5c4033;
     font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    position: relative;
 }
-
+.template-cafe::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235c4033' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+.template-cafe .shop-logo {
+    border: 2px solid #d4c4a8;
+}
 .template-cafe .menu-header {
     padding-bottom: 20px;
     border-bottom: 2px solid #d4c4a8;
 }
-
 .template-cafe .shop-name {
     font-size: 1.8rem;
     font-weight: 700;
     color: #5c4033;
     letter-spacing: 2px;
 }
-
 .template-cafe .shop-subtitle {
     font-size: 0.8rem;
     color: #8b7355;
     letter-spacing: 3px;
     font-style: italic;
 }
-
 .template-cafe .category-title {
     font-size: 0.9rem;
     font-weight: 700;
     color: #8b6f47;
-    text-transform: uppercase;
     letter-spacing: 4px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d4c4a8;
+    text-align: left;
 }
-
-.template-cafe .menu-entry {
-    padding: 6px 0;
+.template-cafe .cafe-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0d5c0;
 }
-
-.template-cafe .entry-name {
+.template-cafe .cafe-photo {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #d4c4a8;
+}
+.template-cafe .cafe-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.template-cafe .cafe-info { flex: 1; }
+.template-cafe .cafe-name {
+    display: block;
     font-size: 0.9rem;
-    color: #5c4033;
     font-weight: 500;
+    color: #5c4033;
 }
-
-.template-cafe .entry-desc {
+.template-cafe .cafe-desc {
+    display: block;
     font-size: 0.72rem;
     color: #8b7355;
     font-style: italic;
 }
-
-.template-cafe .entry-price {
+.template-cafe .cafe-price {
     font-size: 0.9rem;
     font-weight: 600;
     color: #8b6f47;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.template-cafe .tax-note {
+    border-top: 1px solid #d4c4a8;
+    color: #b8a88a;
+}
+.template-cafe .menu-footer {
+    border-top: 1px solid #d4c4a8;
+    color: #8b7355;
 }
 
-.template-cafe .dot-leader {
-    border-bottom-color: #d4c4a8;
-}
-
-/* Small decorative coffee cup corners */
-.template-cafe::before {
-    content: '☕';
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    font-size: 1.5rem;
-    opacity: 0.15;
-}
 
 /* ============================================
-   TEMPLATE: モダン (Modern)
+   TEMPLATE 5: 居酒屋風（和風） izakaya
    ============================================ */
-.template-modern {
-    background: #ffffff;
-    color: #111111;
-    font-family: 'Inter', 'Noto Sans JP', sans-serif;
-    padding: 56px 48px;
-}
-
-.template-modern .shop-name {
-    font-size: 2rem;
-    font-weight: 300;
-    letter-spacing: 12px;
-    text-transform: uppercase;
-    color: #111;
-}
-
-.template-modern .shop-subtitle {
-    font-size: 0.7rem;
-    color: #999;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    margin-top: 4px;
-}
-
-.template-modern .menu-header {
-    padding-bottom: 32px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.template-modern .shop-icon {
-    display: none;
-}
-
-.template-modern .category-title {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: #111;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: left;
-}
-
-.template-modern .category-section {
-    margin-bottom: 36px;
-}
-
-.template-modern .menu-entry {
-    padding: 10px 0;
-    border-bottom: none;
-}
-
-.template-modern .entry-name {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #111;
-}
-
-.template-modern .entry-desc {
-    font-size: 0.72rem;
-    color: #888;
-    font-weight: 300;
-}
-
-.template-modern .entry-price {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: #111;
-    letter-spacing: 1px;
-}
-
-.template-modern .dot-leader {
-    border-bottom-color: #e0e0e0;
-    border-bottom-style: solid;
-}
-
-/* ============================================
-   TEMPLATE: エレガント (Elegant)
-   ============================================ */
-.template-elegant {
-    background: #2d2d2d;
-    color: #c9a84c;
-    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+.template-izakaya {
+    background: #1a1a2e;
+    color: #d4a04a;
+    font-family: 'Noto Serif JP', 'Shippori Mincho', serif;
     position: relative;
 }
-
-.template-elegant::before {
+.template-izakaya::before {
     content: '';
     position: absolute;
-    inset: 14px;
-    border: 2px solid rgba(201, 168, 76, 0.15);
+    inset: 12px;
+    border: 1px solid rgba(212, 160, 74, 0.2);
     pointer-events: none;
 }
-
-.template-elegant .menu-header {
-    padding-bottom: 24px;
-    margin-bottom: 32px;
+.template-izakaya::after {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(212, 160, 74, 0.1);
+    pointer-events: none;
 }
-
-.template-elegant .menu-header::before {
-    content: '✦';
-    display: block;
-    font-size: 1.5rem;
-    color: rgba(201, 168, 76, 0.4);
-    margin-bottom: 12px;
+.template-izakaya .shop-logo {
+    border: 1px solid rgba(212,160,74,0.3);
+    filter: drop-shadow(0 0 8px rgba(212,160,74,0.2));
 }
-
-.template-elegant .menu-header::after {
-    content: '— ✦ —';
-    display: block;
-    margin-top: 16px;
-    font-size: 0.9rem;
-    color: rgba(201, 168, 76, 0.3);
+.template-izakaya .shop-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #d4a04a;
     letter-spacing: 8px;
 }
-
-.template-elegant .shop-name {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #c9a84c;
-    letter-spacing: 6px;
-}
-
-.template-elegant .shop-subtitle {
+.template-izakaya .shop-subtitle {
     font-size: 0.8rem;
-    color: rgba(201, 168, 76, 0.5);
+    color: rgba(212,160,74,0.6);
     letter-spacing: 4px;
-    font-style: italic;
 }
-
-.template-elegant .category-title {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #c9a84c;
+.template-izakaya .menu-header::after {
+    content: '\2756';
+    display: block;
+    margin-top: 16px;
+    font-size: 1.2rem;
+    color: rgba(212,160,74,0.4);
+}
+.template-izakaya .category-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #d4a04a;
     letter-spacing: 6px;
 }
+.template-izakaya .category-title::before { content: '\2014 '; color: rgba(212,160,74,0.4); }
+.template-izakaya .category-title::after  { content: ' \2014'; color: rgba(212,160,74,0.4); }
 
-.template-elegant .category-title::before {
-    content: '⸻ ';
-    color: rgba(201, 168, 76, 0.3);
-}
-.template-elegant .category-title::after {
-    content: ' ⸻';
-    color: rgba(201, 168, 76, 0.3);
-}
-
-.template-elegant .menu-entry {
+.template-izakaya .iza-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     padding: 8px 0;
+    border-bottom: 1px solid rgba(212,160,74,0.1);
 }
-
-.template-elegant .entry-name {
+.template-izakaya .iza-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid rgba(212,160,74,0.25);
+}
+.template-izakaya .iza-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.template-izakaya .iza-info { flex: 1; }
+.template-izakaya .iza-name {
+    display: block;
     font-size: 0.95rem;
-    color: #e0d5b0;
+    color: #d4a04a;
 }
-
-.template-elegant .entry-desc {
+.template-izakaya .iza-desc {
+    display: block;
     font-size: 0.72rem;
-    color: rgba(201, 168, 76, 0.45);
-    font-style: italic;
+    color: rgba(212,160,74,0.5);
 }
-
-.template-elegant .entry-price {
+.template-izakaya .iza-price {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #c9a84c;
+    color: #e8c878;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.template-izakaya .tax-note {
+    border-top: 1px solid rgba(212,160,74,0.1);
+    color: rgba(212,160,74,0.35);
+}
+.template-izakaya .menu-footer {
+    border-top: 1px solid rgba(212,160,74,0.1);
+    color: rgba(212,160,74,0.4);
 }
 
-.template-elegant .dot-leader {
-    border-bottom-color: rgba(201, 168, 76, 0.15);
-}
 
 /* ============================================
-   TEMPLATE: サロン (Salon)
+   TEMPLATE 6: サロン・美容室 salon
    ============================================ */
 .template-salon {
-    background: #faf5ff;
+    background: linear-gradient(180deg, #faf5ff 0%, #f5eef8 100%);
     color: #5a4060;
     font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
     position: relative;
     overflow: hidden;
 }
-
 .template-salon::before {
-    content: '✿';
+    content: '';
     position: absolute;
-    top: 20px;
-    left: 24px;
-    font-size: 2rem;
-    color: rgba(212, 160, 200, 0.15);
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212,160,200,0.1), transparent 70%);
+    pointer-events: none;
 }
 .template-salon::after {
-    content: '✿';
+    content: '';
     position: absolute;
-    bottom: 20px;
-    right: 24px;
-    font-size: 2rem;
-    color: rgba(212, 160, 200, 0.15);
+    bottom: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(160,180,212,0.08), transparent 70%);
+    pointer-events: none;
 }
-
+.template-salon .shop-logo {
+    border: 2px solid rgba(180,140,200,0.3);
+}
 .template-salon .menu-header {
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(180, 140, 200, 0.2);
+    border-bottom: 1px solid rgba(180,140,200,0.2);
 }
-
 .template-salon .shop-name {
     font-size: 1.8rem;
     font-weight: 600;
     color: #6b4c7a;
     letter-spacing: 4px;
 }
-
 .template-salon .shop-subtitle {
     font-size: 0.75rem;
     color: #a088b0;
     letter-spacing: 3px;
 }
-
 .template-salon .category-title {
     font-size: 0.85rem;
     font-weight: 500;
     color: #8b6ca0;
     letter-spacing: 3px;
 }
-
-.template-salon .category-title::before {
-    content: '✿ ';
-    color: #d4a0c8;
-    font-size: 0.8rem;
-}
+.template-salon .category-title::before { content: '\273f '; color: #d4a0c8; font-size: 0.8rem; }
 
 .template-salon .menu-entry {
     padding: 7px 0;
-    border-bottom: 1px solid rgba(180, 140, 200, 0.1);
+    border-bottom: 1px solid rgba(180,140,200,0.1);
 }
-
 .template-salon .entry-name {
     font-size: 0.9rem;
     color: #5a4060;
 }
-
 .template-salon .entry-desc {
     font-size: 0.72rem;
     color: #a088b0;
 }
-
 .template-salon .entry-price {
     font-size: 0.9rem;
     font-weight: 600;
     color: #8b6ca0;
 }
-
 .template-salon .dot-leader {
-    border-bottom-color: rgba(180, 140, 200, 0.2);
+    border-bottom-color: rgba(180,140,200,0.2);
+}
+.template-salon .tax-note {
+    border-top: 1px solid rgba(180,140,200,0.15);
+    color: #b8a0c0;
+}
+.template-salon .menu-footer {
+    border-top: 1px solid rgba(180,140,200,0.15);
+    color: #a088b0;
 }
 
+
 /* ============================================
-   PRINT OVERRIDES PER TEMPLATE
+   MAKER UI OVERRIDES (editor-side)
+   ============================================ */
+
+/* Logo upload area */
+.logo-upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    transition: var(--transition);
+    position: relative;
+}
+.logo-upload-area.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+}
+.logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+.logo-placeholder:hover {
+    color: var(--accent);
+}
+.logo-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+.logo-preview img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+.btn-remove-photo {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Item photo thumb in editor */
+.item-photo-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
+.item-photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.btn-remove-photo-sm {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.item-photo-add {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: var(--transition);
+    font-size: 1rem;
+}
+.item-photo-add:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+}
+
+/* Form row */
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+/* Tax toggle */
+.tax-toggle, .size-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.tax-btn, .size-btn {
+    flex: 1;
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.tax-btn + .tax-btn, .size-btn + .size-btn {
+    border-left: 1px solid var(--border);
+}
+.tax-btn.active, .size-btn.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Updated menu-item-row for photo support */
+.menu-item-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 6px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    transition: var(--transition);
+}
+.menu-item-row:hover {
+    background: rgba(255,255,255,0.02);
+}
+.item-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.item-fields input {
+    width: 100%;
+    padding: 6px 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    outline: none;
+}
+.item-fields input:focus {
+    border-color: var(--accent);
+}
+.item-row-sub {
+    display: flex;
+    gap: 6px;
+}
+.item-row-sub .price-input {
+    width: 80px;
+    flex-shrink: 0;
+}
+.item-row-sub .desc-input {
+    flex: 1;
+    font-size: 0.75rem !important;
+    color: var(--text-secondary);
+}
+
+.category-desc-row {
+    padding: 0 14px 8px;
+}
+.category-desc-row input {
+    width: 100%;
+    padding: 4px 8px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    outline: none;
+}
+.category-desc-row input:focus {
+    border-color: var(--accent);
+}
+
+/* Mobile toggle button */
+.btn-mobile-toggle {
+    padding: 6px 14px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Preview scaler */
+.preview-scaler {
+    transition: transform 0.3s ease;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+}
+
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .preview-panel {
+        display: none;
+    }
+    .menu-item-row {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* ============================================
+   PRINT STYLES
    ============================================ */
 @media print {
-    .menu-template {
-        padding: 24px;
-        min-height: auto;
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
     }
-    .template-washoku::before,
-    .template-washoku::after,
-    .template-elegant::before {
-        inset: 8px;
+
+    body {
+        background: none !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .preview-container,
+    .preview-container * {
+        visibility: visible !important;
+    }
+
+    .preview-scaler {
+        transform: none !important;
+        width: auto !important;
+        margin: 0 !important;
+    }
+
+    .preview-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+    }
+
+    .menu-template {
+        min-height: auto !important;
+        width: 100% !important;
+    }
+
+    .watermark {
+        display: none !important;
+    }
+
+    .editor-panel,
+    .maker-nav,
+    .preview-actions,
+    .btn-mobile-toggle,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    @page {
+        margin: 8mm;
+    }
+
+    .page-a4-portrait  { size: A4 portrait; }
+    .page-a4-landscape { size: A4 landscape; }
+    .page-a3-portrait  { size: A3 portrait; }
+
+    /* Ensure backgrounds print */
+    .template-text-elegant,
+    .template-izakaya {
+        background-color: #1c1c1c !important;
+    }
+    .template-izakaya {
+        background-color: #1a1a2e !important;
+    }
+    .template-cafe {
+        background-color: #f5f0e6 !important;
+    }
+    .template-salon {
+        background-color: #faf5ff !important;
     }
 }
