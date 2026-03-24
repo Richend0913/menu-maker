@@ -9,859 +9,1004 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700;800&family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6327505164684489" crossorigin="anonymous"></script>
+    <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+        font-family: 'Noto Sans JP', 'Inter', sans-serif;
+        background: #f5f5f7;
+        color: #1d1d1f;
+        min-height: 100dvh;
+    }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-bar {
+        position: sticky; top: 0; z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid #e5e5e7;
+        padding: 12px 20px;
+        display: flex; align-items: center; gap: 12px;
+    }
+    .progress-bar .brand {
+        font-size: 0.8rem; color: #86868b;
+        text-decoration: none; margin-right: auto;
+        display: flex; align-items: center; gap: 4px;
+    }
+    .progress-steps {
+        display: flex; align-items: center; gap: 8px;
+        margin-right: auto;
+    }
+    .progress-dot {
+        width: 32px; height: 32px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.85rem; font-weight: 700;
+        background: #e5e5e7; color: #86868b;
+        transition: all 0.3s;
+    }
+    .progress-dot.active { background: #007aff; color: #fff; }
+    .progress-dot.done { background: #34c759; color: #fff; }
+    .progress-line {
+        width: 24px; height: 2px; background: #e5e5e7; border-radius: 1px;
+        transition: background 0.3s;
+    }
+    .progress-line.done { background: #34c759; }
+    .save-status {
+        font-size: 0.7rem; color: #86868b; min-width: 80px; text-align: right;
+    }
+
+    /* ========== WIZARD STEPS ========== */
+    .wizard-step {
+        display: none;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 24px 16px 100px;
+    }
+    .wizard-step.active { display: block; }
+
+    .step-title {
+        font-size: 1.6rem; font-weight: 800;
+        margin-bottom: 8px;
+    }
+    .step-desc {
+        font-size: 0.95rem; color: #86868b;
+        margin-bottom: 28px;
+    }
+
+    /* ========== STEP 1: TEMPLATE CARDS ========== */
+    .template-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+    .tpl-card {
+        background: #fff;
+        border: 3px solid transparent;
+        border-radius: 16px;
+        padding: 0;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.2s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .tpl-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .tpl-card:active { transform: scale(0.98); }
+    .tpl-card .tpl-preview {
+        height: 140px;
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
+    }
+    .tpl-card .tpl-label {
+        padding: 12px 16px;
+        font-weight: 600; font-size: 0.9rem;
+        border-top: 1px solid #f0f0f0;
+    }
+    .tpl-card .tpl-sublabel {
+        padding: 0 16px 12px;
+        font-size: 0.75rem; color: #86868b;
+    }
+
+    /* Mini preview styles */
+    .mini-photo-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+        padding: 12px; width: 100%;
+    }
+    .mini-photo-grid .box {
+        background: #e5e5e7; border-radius: 6px; aspect-ratio: 1;
+        display: flex; align-items: flex-end; justify-content: center;
+        padding-bottom: 6px; font-size: 0.55rem; color: #86868b;
+    }
+    .mini-photo-side {
+        display: flex; flex-direction: column; gap: 6px;
+        padding: 12px; width: 100%;
+    }
+    .mini-photo-side .row {
+        display: flex; gap: 8px; align-items: center;
+    }
+    .mini-photo-side .thumb {
+        width: 32px; height: 32px; background: #e5e5e7; border-radius: 4px; flex-shrink: 0;
+    }
+    .mini-photo-side .lines {
+        flex: 1; display: flex; flex-direction: column; gap: 3px;
+    }
+    .mini-photo-side .line {
+        height: 6px; background: #e5e5e7; border-radius: 3px;
+    }
+    .mini-photo-side .line.short { width: 50%; }
+
+    .mini-text-elegant {
+        background: #1a1a2e; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        padding: 16px;
+    }
+    .mini-text-elegant .line {
+        height: 5px; border-radius: 2px;
+    }
+    .mini-text-elegant .title-line { width: 60%; background: #c9a84c; height: 8px; margin-bottom: 4px; border-radius: 2px; }
+    .mini-text-elegant .item-line { width: 80%; background: rgba(255,255,255,0.2); height: 5px; border-radius: 2px; }
+    .mini-text-elegant .dot-line { width: 70%; border-bottom: 1px dotted rgba(255,255,255,0.15); height: 0; }
+
+    .mini-cafe {
+        background: #faf5eb; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+        padding: 16px;
+    }
+    .mini-cafe .circle {
+        width: 28px; height: 28px; background: #d4a574; border-radius: 50%;
+    }
+    .mini-cafe .row { display: flex; align-items: center; gap: 8px; }
+    .mini-cafe .line { height: 5px; background: #c9a57a; border-radius: 2px; width: 60px; }
+    .mini-cafe .line.short { width: 36px; }
+
+    .mini-izakaya {
+        background: #1a0a0a; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        padding: 16px;
+    }
+    .mini-izakaya .title-line { width: 50%; background: #e8c547; height: 10px; border-radius: 2px; }
+    .mini-izakaya .item-line { width: 70%; background: rgba(255,255,255,0.25); height: 5px; border-radius: 2px; }
+    .mini-izakaya .border-line { width: 80%; border-bottom: 1px solid rgba(232,197,71,0.3); height: 0; }
+
+    .mini-salon {
+        background: linear-gradient(135deg, #fce4ec, #f3e5f5); width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        padding: 16px;
+    }
+    .mini-salon .title-line { width: 40%; background: #ce93d8; height: 7px; border-radius: 4px; }
+    .mini-salon .item-line { width: 65%; background: rgba(156,39,176,0.15); height: 5px; border-radius: 3px; }
+    .mini-salon .price-line { width: 30%; background: rgba(156,39,176,0.25); height: 5px; border-radius: 3px; }
+
+    /* ========== STEP 2: FORM ========== */
+    .shop-name-input {
+        width: 100%;
+        font-size: 1.3rem; font-weight: 700;
+        padding: 16px 20px;
+        border: 2px solid #e5e5e7;
+        border-radius: 14px;
+        outline: none;
+        transition: border-color 0.2s;
+        margin-bottom: 28px;
+    }
+    .shop-name-input:focus { border-color: #007aff; }
+    .shop-name-input::placeholder { color: #c7c7cc; }
+
+    .section-label {
+        font-size: 1.1rem; font-weight: 700;
+        margin-bottom: 14px;
+        display: flex; align-items: center; gap: 8px;
+    }
+
+    .category-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .cat-header {
+        display: flex; align-items: center; gap: 10px;
+        margin-bottom: 16px;
+    }
+    .cat-name-input {
+        flex: 1;
+        font-size: 1.05rem; font-weight: 600;
+        padding: 10px 14px;
+        border: 2px solid #e5e5e7;
+        border-radius: 10px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .cat-name-input:focus { border-color: #007aff; }
+    .cat-name-input::placeholder { color: #c7c7cc; }
+
+    .btn-delete-small {
+        width: 32px; height: 32px;
+        background: none; border: none;
+        color: #ff3b30; font-size: 1.2rem;
+        cursor: pointer; border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .btn-delete-small:hover { background: #fff0f0; }
+
+    .item-row {
+        display: flex; align-items: center; gap: 8px;
+        margin-bottom: 10px;
+    }
+    .item-row input[type="text"] {
+        padding: 10px 12px;
+        border: 1.5px solid #e5e5e7;
+        border-radius: 10px;
+        outline: none;
+        font-size: 0.95rem;
+        transition: border-color 0.2s;
+    }
+    .item-row input[type="text"]:focus { border-color: #007aff; }
+    .item-row input[type="text"]::placeholder { color: #c7c7cc; }
+    .item-name-input { flex: 2; min-width: 0; }
+    .item-price-input { flex: 0.8; min-width: 70px; max-width: 120px; }
+
+    .btn-photo {
+        width: 40px; height: 40px;
+        background: #f5f5f7; border: 1.5px solid #e5e5e7;
+        border-radius: 10px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.1rem; flex-shrink: 0;
+        overflow: hidden; position: relative;
+    }
+    .btn-photo:hover { background: #eee; }
+    .btn-photo img {
+        width: 100%; height: 100%; object-fit: cover;
+        position: absolute; top: 0; left: 0;
+    }
+    .btn-photo .remove-overlay {
+        position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        color: #fff; font-size: 1rem;
+        display: none; align-items: center; justify-content: center;
+    }
+    .btn-photo:hover .remove-overlay { display: flex; }
+
+    .btn-add-item {
+        width: 100%;
+        padding: 12px;
+        background: none;
+        border: 2px dashed #d1d1d6;
+        border-radius: 10px;
+        color: #007aff;
+        font-size: 0.95rem; font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-add-item:hover { background: #f0f7ff; border-color: #007aff; }
+
+    .btn-add-category {
+        width: 100%;
+        padding: 16px;
+        background: #fff;
+        border: 2px dashed #d1d1d6;
+        border-radius: 16px;
+        color: #007aff;
+        font-size: 1rem; font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: all 0.2s;
+    }
+    .btn-add-category:hover { background: #f0f7ff; border-color: #007aff; }
+
+    /* ========== BOTTOM ACTION BUTTONS ========== */
+    .bottom-action {
+        position: fixed; bottom: 0; left: 0; right: 0;
+        background: #fff;
+        border-top: 1px solid #e5e5e7;
+        padding: 12px 16px;
+        z-index: 90;
+        display: flex; justify-content: center; gap: 12px;
+    }
+    .btn-primary {
+        flex: 1; max-width: 400px;
+        padding: 16px 24px;
+        background: #007aff;
+        color: #fff;
+        border: none; border-radius: 14px;
+        font-size: 1.1rem; font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #0056cc; }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-secondary {
+        flex: 1; max-width: 400px;
+        padding: 16px 24px;
+        background: #f5f5f7;
+        color: #1d1d1f;
+        border: none; border-radius: 14px;
+        font-size: 1.1rem; font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: #e8e8ed; }
+
+    /* ========== STEP 3: PREVIEW ========== */
+    .preview-wrapper {
+        display: flex; justify-content: center;
+        padding-bottom: 20px;
+    }
+    .preview-scaler {
+        transform-origin: top center;
+    }
+    .preview-container {
+        position: relative;
+        background: #fff;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+        border-radius: 4px;
+    }
+    .watermark {
+        position: absolute;
+        bottom: 8px; left: 0; right: 0;
+        text-align: center;
+        font-size: 0.65rem;
+        color: rgba(0,0,0,0.15);
+        pointer-events: none;
+    }
+
+    .action-buttons {
+        display: flex; flex-direction: column; gap: 10px;
+        max-width: 400px;
+        margin: 24px auto 0;
+    }
+    .btn-print {
+        padding: 16px;
+        background: #34c759; color: #fff;
+        border: none; border-radius: 14px;
+        font-size: 1.05rem; font-weight: 700;
+        cursor: pointer;
+    }
+    .btn-print:hover { background: #2db84e; }
+    .btn-download {
+        padding: 16px;
+        background: #007aff; color: #fff;
+        border: none; border-radius: 14px;
+        font-size: 1.05rem; font-weight: 700;
+        cursor: pointer;
+    }
+    .btn-download:hover { background: #0056cc; }
+    .btn-back {
+        padding: 16px;
+        background: #f5f5f7; color: #1d1d1f;
+        border: none; border-radius: 14px;
+        font-size: 1.05rem; font-weight: 700;
+        cursor: pointer;
+    }
+    .btn-back:hover { background: #e8e8ed; }
+
+    /* ========== PRINT ========== */
+    @media print {
+        body * { visibility: hidden; }
+        .preview-container, .preview-container * { visibility: visible; }
+        .preview-container {
+            position: absolute; left: 0; top: 0;
+            box-shadow: none; border-radius: 0;
+        }
+        .watermark { display: none; }
+        .preview-scaler { transform: none !important; }
+        .progress-bar, .bottom-action { display: none !important; }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 500px) {
+        .template-cards {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .tpl-card .tpl-preview { height: 110px; }
+        .step-title { font-size: 1.3rem; }
+        .item-row { flex-wrap: wrap; }
+        .item-name-input { flex: 1 1 100%; }
+        .item-price-input { flex: 1; max-width: none; }
+    }
+    </style>
 </head>
-<body class="maker-page">
-    <!-- Navigation -->
-    <nav class="maker-nav">
-        <div class="nav-brand">
-            <a href="index.html">
-                <span class="nav-icon">📋</span>
-                <span class="nav-name">メニューメーカー</span>
-            </a>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-            <span id="save-status" style="font-size:0.75rem;color:var(--text-muted);"></span>
-            <button class="btn-mobile-toggle" id="btn-toggle-view" style="display:none;">プレビュー</button>
-        </div>
-    </nav>
+<body>
 
-    <div class="maker-layout">
-        <!-- Editor Panel -->
-        <div class="editor-panel" id="editor-panel">
-            <div class="editor-steps">
+<!-- Progress Bar -->
+<div class="progress-bar">
+    <a href="index.html" class="brand">メニューメーカー</a>
+    <div class="progress-steps">
+        <div class="progress-dot active" id="dot-1">1</div>
+        <div class="progress-line" id="line-1"></div>
+        <div class="progress-dot" id="dot-2">2</div>
+        <div class="progress-line" id="line-2"></div>
+        <div class="progress-dot" id="dot-3">3</div>
+    </div>
+    <span class="save-status" id="save-status"></span>
+</div>
 
-                <!-- STEP 1: Template Selection -->
-                <div class="step-section">
-                    <div class="step-header">
-                        <div class="step-num">1</div>
-                        <div class="step-title">テンプレート選択</div>
-                    </div>
-                    <div class="template-grid" id="template-selector">
-                        <div class="template-option active" data-template="photo-grid">
-                            <span class="tpl-icon">📷</span>
-                            <span class="tpl-name">写真メイン（グリッド）</span>
-                            <span class="tpl-desc">大きな写真＋名前・価格</span>
-                        </div>
-                        <div class="template-option" data-template="photo-side">
-                            <span class="tpl-icon">📖</span>
-                            <span class="tpl-name">写真＋説明（横並び）</span>
-                            <span class="tpl-desc">写真左・テキスト右</span>
-                        </div>
-                        <div class="template-option" data-template="text-elegant">
-                            <span class="tpl-icon">✨</span>
-                            <span class="tpl-name">テキストメイン</span>
-                            <span class="tpl-desc">高級感・写真なし</span>
-                        </div>
-                        <div class="template-option" data-template="cafe">
-                            <span class="tpl-icon">☕</span>
-                            <span class="tpl-name">カフェ風</span>
-                            <span class="tpl-desc">ナチュラル・丸写真</span>
-                        </div>
-                        <div class="template-option" data-template="izakaya">
-                            <span class="tpl-icon">🏮</span>
-                            <span class="tpl-name">居酒屋風（和風）</span>
-                            <span class="tpl-desc">暗背景・筆文字風</span>
-                        </div>
-                        <div class="template-option" data-template="salon">
-                            <span class="tpl-icon">💅</span>
-                            <span class="tpl-name">サロン・美容室</span>
-                            <span class="tpl-desc">パステル・サービス一覧</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- STEP 2: Shop Info -->
-                <div class="step-section">
-                    <div class="step-header">
-                        <div class="step-num">2</div>
-                        <div class="step-title">店舗情報</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">店名 *</label>
-                        <input type="text" class="form-input" id="shop-name" placeholder="例：和食処 匠" maxlength="40">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">サブタイトル（任意）</label>
-                        <input type="text" class="form-input" id="shop-subtitle" placeholder="例：創業1985年 / Season Menu">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">ロゴ / 店舗写真（任意）</label>
-                        <div class="logo-upload-area" id="logo-upload-area">
-                            <div class="logo-preview" id="logo-preview" style="display:none;">
-                                <img id="logo-preview-img" src="" alt="ロゴ">
-                                <button class="btn-remove-photo" onclick="removeLogo()" title="削除">&times;</button>
-                            </div>
-                            <div class="logo-placeholder" id="logo-placeholder">
-                                <span>📷 クリックまたはドラッグして画像をアップロード</span>
-                                <input type="file" id="logo-input" accept="image/*" style="display:none;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group" style="flex:1;">
-                            <label class="form-label">営業時間（任意）</label>
-                            <input type="text" class="form-input" id="shop-hours" placeholder="例：11:00〜22:00">
-                        </div>
-                        <div class="form-group" style="flex:1;">
-                            <label class="form-label">電話番号（任意）</label>
-                            <input type="text" class="form-input" id="shop-phone" placeholder="例：03-1234-5678">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">SNS / Instagram（任意）</label>
-                        <input type="text" class="form-input" id="shop-sns" placeholder="例：@shopname">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">税表示</label>
-                        <div class="tax-toggle">
-                            <button class="tax-btn active" data-tax="included" id="tax-included">税込</button>
-                            <button class="tax-btn" data-tax="excluded" id="tax-excluded">税抜</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- STEP 3: Menu Items -->
-                <div class="step-section">
-                    <div class="step-header">
-                        <div class="step-num">3</div>
-                        <div class="step-title">メニュー項目</div>
-                    </div>
-                    <div id="categories-container">
-                        <!-- Categories dynamically added here -->
-                    </div>
-                    <button class="btn-add-category" id="btn-add-category">
-                        ＋ カテゴリを追加
-                    </button>
-                </div>
-
-                <!-- STEP 4: Output Options -->
-                <div class="step-section">
-                    <div class="step-header">
-                        <div class="step-num">4</div>
-                        <div class="step-title">出力オプション</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">用紙サイズ</label>
-                        <div class="size-toggle">
-                            <button class="size-btn active" data-size="a4-portrait" id="size-a4p">A4 縦</button>
-                            <button class="size-btn" data-size="a4-landscape" id="size-a4l">A4 横</button>
-                            <button class="size-btn" data-size="a3-portrait" id="size-a3p">A3 縦</button>
-                        </div>
-                    </div>
-                    <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px;">
-                        <button class="btn-secondary btn-full" onclick="window.print()">
-                            🖨️ ブラウザで印刷（無料）
-                        </button>
-                        <button class="btn-primary btn-full" onclick="downloadImage()">
-                            📷 画像ダウンロード（無料）
-                        </button>
-                        <button class="btn-primary btn-full" id="btn-pdf-download" style="background:linear-gradient(135deg,#c9a84c,#a08530);">
-                            📄 透かしなし高解像度 ¥500
-                        </button>
-                        <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">
-                            無料版にはウォーターマークが含まれます
-                        </p>
-                    </div>
+<!-- ==================== STEP 1: Choose Template ==================== -->
+<div class="wizard-step active" id="step-1">
+    <h1 class="step-title">テンプレートを選ぶ</h1>
+    <p class="step-desc">お店の雰囲気に合うデザインをタップしてください</p>
+    <div class="template-cards" id="template-cards">
+        <!-- photo-grid -->
+        <div class="tpl-card" data-template="photo-grid">
+            <div class="tpl-preview">
+                <div class="mini-photo-grid">
+                    <div class="box">PHOTO</div>
+                    <div class="box">PHOTO</div>
+                    <div class="box">PHOTO</div>
+                    <div class="box">PHOTO</div>
                 </div>
             </div>
+            <div class="tpl-label">写真グリッド</div>
+            <div class="tpl-sublabel">大きな写真がメインのレイアウト</div>
         </div>
-
-        <!-- Preview Panel -->
-        <div class="preview-panel" id="preview-panel">
-            <div class="preview-actions">
-                <button class="btn-secondary" onclick="window.print()">🖨️ 印刷</button>
-                <button class="btn-secondary" onclick="downloadImage()">📷 画像保存</button>
-            </div>
-            <div class="preview-scaler" id="preview-scaler">
-                <div class="preview-container" id="preview-container">
-                    <div class="menu-template template-photo-grid page-a4-portrait" id="menu-preview">
-                        <div class="menu-header" id="preview-header">
-                            <div class="shop-logo" id="preview-logo" style="display:none;"></div>
-                            <h1 class="shop-name" id="preview-name">店名を入力してください</h1>
-                            <p class="shop-subtitle" id="preview-subtitle"></p>
-                        </div>
-                        <div class="menu-body" id="preview-body">
-                            <!-- Menu items rendered here -->
-                        </div>
-                        <div class="menu-footer" id="preview-footer" style="display:none;">
-                            <div class="footer-info" id="preview-footer-info"></div>
-                        </div>
-                    </div>
-                    <div class="watermark">Powered by メニューメーカー</div>
+        <!-- photo-side -->
+        <div class="tpl-card" data-template="photo-side">
+            <div class="tpl-preview">
+                <div class="mini-photo-side">
+                    <div class="row"><div class="thumb"></div><div class="lines"><div class="line"></div><div class="line short"></div></div></div>
+                    <div class="row"><div class="thumb"></div><div class="lines"><div class="line"></div><div class="line short"></div></div></div>
+                    <div class="row"><div class="thumb"></div><div class="lines"><div class="line"></div><div class="line short"></div></div></div>
                 </div>
+            </div>
+            <div class="tpl-label">写真+説明</div>
+            <div class="tpl-sublabel">写真と説明文を横並びで表示</div>
+        </div>
+        <!-- text-elegant -->
+        <div class="tpl-card" data-template="text-elegant">
+            <div class="tpl-preview">
+                <div class="mini-text-elegant">
+                    <div class="title-line"></div>
+                    <div class="dot-line"></div>
+                    <div class="item-line"></div>
+                    <div class="item-line"></div>
+                    <div class="dot-line"></div>
+                    <div class="item-line"></div>
+                    <div class="item-line"></div>
+                </div>
+            </div>
+            <div class="tpl-label">テキスト（高級感）</div>
+            <div class="tpl-sublabel">写真なし。洗練されたデザイン</div>
+        </div>
+        <!-- cafe -->
+        <div class="tpl-card" data-template="cafe">
+            <div class="tpl-preview">
+                <div class="mini-cafe">
+                    <div class="row"><div class="circle"></div><div class="lines" style="display:flex;flex-direction:column;gap:3px;"><div class="line"></div><div class="line short"></div></div></div>
+                    <div class="row"><div class="circle"></div><div class="lines" style="display:flex;flex-direction:column;gap:3px;"><div class="line"></div><div class="line short"></div></div></div>
+                    <div class="row"><div class="circle"></div><div class="lines" style="display:flex;flex-direction:column;gap:3px;"><div class="line"></div><div class="line short"></div></div></div>
+                </div>
+            </div>
+            <div class="tpl-label">カフェ風</div>
+            <div class="tpl-sublabel">ナチュラルで温かみのあるデザイン</div>
+        </div>
+        <!-- izakaya -->
+        <div class="tpl-card" data-template="izakaya">
+            <div class="tpl-preview">
+                <div class="mini-izakaya">
+                    <div class="title-line"></div>
+                    <div class="border-line"></div>
+                    <div class="item-line"></div>
+                    <div class="item-line"></div>
+                    <div class="border-line"></div>
+                    <div class="item-line"></div>
+                    <div class="item-line"></div>
+                </div>
+            </div>
+            <div class="tpl-label">居酒屋・和風</div>
+            <div class="tpl-sublabel">暗めの背景に筆文字風テキスト</div>
+        </div>
+        <!-- salon -->
+        <div class="tpl-card" data-template="salon">
+            <div class="tpl-preview">
+                <div class="mini-salon">
+                    <div class="title-line"></div>
+                    <div class="item-line"></div>
+                    <div class="price-line"></div>
+                    <div class="item-line"></div>
+                    <div class="price-line"></div>
+                    <div class="item-line"></div>
+                    <div class="price-line"></div>
+                </div>
+            </div>
+            <div class="tpl-label">サロン・美容室</div>
+            <div class="tpl-sublabel">パステルカラーのサービス一覧</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== STEP 2: Enter Menu ==================== -->
+<div class="wizard-step" id="step-2">
+    <h1 class="step-title">メニューを入力</h1>
+    <p class="step-desc">店名とメニューを入力してください</p>
+
+    <input type="text" class="shop-name-input" id="shop-name" placeholder="お店の名前" maxlength="40">
+
+    <div class="section-label">カテゴリ</div>
+    <div id="categories-container"></div>
+    <button class="btn-add-category" id="btn-add-category">+ カテゴリを追加</button>
+</div>
+<div class="bottom-action" id="bottom-step2" style="display:none;">
+    <button class="btn-primary" onclick="goToStep(3)">プレビューを見る →</button>
+</div>
+
+<!-- ==================== STEP 3: Preview & Download ==================== -->
+<div class="wizard-step" id="step-3">
+    <h1 class="step-title">プレビュー</h1>
+    <p class="step-desc">完成イメージを確認して、印刷またはダウンロード</p>
+
+    <div class="preview-wrapper">
+        <div class="preview-scaler" id="preview-scaler">
+            <div class="preview-container" id="preview-container">
+                <div class="menu-template template-photo-grid page-a4-portrait" id="menu-preview">
+                    <div class="menu-header" id="preview-header">
+                        <div class="shop-logo" id="preview-logo" style="display:none;"></div>
+                        <h1 class="shop-name" id="preview-name">店名を入力してください</h1>
+                        <p class="shop-subtitle" id="preview-subtitle"></p>
+                    </div>
+                    <div class="menu-body" id="preview-body"></div>
+                    <div class="menu-footer" id="preview-footer" style="display:none;">
+                        <div class="footer-info" id="preview-footer-info"></div>
+                    </div>
+                </div>
+                <div class="watermark">Powered by メニューメーカー</div>
             </div>
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div id="payment-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>📄 高解像度ダウンロード</h3>
-            <p style="color:var(--text-secondary);margin-bottom:24px;font-size:0.9rem;">
-                印刷所入稿にも対応した高品質画像をダウンロードできます。<br>ウォーターマークなし。
-            </p>
-            <div style="font-size:2.5rem;font-weight:800;color:var(--accent-light);margin-bottom:24px;">¥500</div>
-            <div id="payment" style="margin-bottom:16px;">
-                <!-- Stripe payment element placeholder -->
-                <div style="padding:20px;background:var(--bg-primary);border:1px dashed var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;">
-                    Stripe決済準備中...<br>
-                    <small>（実装時にStripe Elementsを統合）</small>
-                </div>
-            </div>
-            <button class="btn-secondary btn-full" onclick="closePaymentModal()">閉じる</button>
-        </div>
+    <div class="action-buttons">
+        <button class="btn-print" onclick="window.print()">印刷する（無料）</button>
+        <button class="btn-download" onclick="downloadImage()">画像でダウンロード</button>
+        <button class="btn-back" onclick="goToStep(2)">← 編集に戻る</button>
     </div>
+</div>
 
-    <script>
-    // ============================================
-    // MENU MAKER PRO - Full Application
-    // ============================================
+<script>
+// ============================================
+// MENU MAKER - 3-Step Wizard
+// ============================================
 
-    // --- State ---
-    let state = {
-        template: 'photo-grid',
-        pageSize: 'a4-portrait',
-        shopName: '',
-        shopSubtitle: '',
-        shopLogo: '',
-        shopHours: '',
-        shopPhone: '',
-        shopSns: '',
-        taxDisplay: 'included',
-        categories: []
-    };
+let currentStep = 1;
 
-    // --- Utility ---
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
+// --- State ---
+let state = {
+    template: 'photo-grid',
+    pageSize: 'a4-portrait',
+    shopName: '',
+    taxDisplay: 'included',
+    categories: []
+};
 
-    function generateId() {
-        return '_' + Math.random().toString(36).substr(2, 9);
-    }
+// --- Utility ---
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
-    // --- Load from localStorage ---
-    function loadState() {
-        try {
-            const saved = localStorage.getItem('menumaker_pro_state');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                state = { ...state, ...parsed };
-            }
-        } catch (e) {
-            console.warn('Failed to load state:', e);
+function generateId() {
+    return '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// --- localStorage ---
+function loadState() {
+    try {
+        const saved = localStorage.getItem('menumaker_wizard_state');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            state = { ...state, ...parsed };
         }
+    } catch (e) {
+        console.warn('Failed to load state:', e);
+    }
+    if (state.categories.length === 0) {
+        state.categories = [{
+            id: generateId(),
+            name: 'おすすめ',
+            items: [
+                { id: generateId(), name: '', price: '', photo: '' }
+            ]
+        }];
+    }
+}
 
-        if (state.categories.length === 0) {
-            state.categories = [
-                {
-                    id: generateId(),
-                    name: '前菜・一品料理',
-                    desc: '',
-                    items: [
-                        { id: generateId(), name: '枝豆', price: '380', desc: '塩茹でした新鮮な枝豆', photo: '' },
-                        { id: generateId(), name: '冷やしトマト', price: '450', desc: '', photo: '' }
-                    ]
-                },
-                {
-                    id: generateId(),
-                    name: 'メイン',
-                    desc: '',
-                    items: [
-                        { id: generateId(), name: '本日の刺身盛り合わせ', price: '1,800', desc: '旬の魚を五種盛りで', photo: '' },
-                        { id: generateId(), name: '和牛ステーキ', price: '2,800', desc: '特選A5和牛150g', photo: '' }
-                    ]
-                },
-                {
-                    id: generateId(),
-                    name: 'ドリンク',
-                    desc: '',
-                    items: [
-                        { id: generateId(), name: '生ビール', price: '550', desc: '', photo: '' },
-                        { id: generateId(), name: '日本酒（一合）', price: '680', desc: '厳選地酒各種', photo: '' }
-                    ]
-                }
-            ];
+function saveState() {
+    try {
+        localStorage.setItem('menumaker_wizard_state', JSON.stringify(state));
+        const el = document.getElementById('save-status');
+        el.textContent = '保存済み';
+        setTimeout(() => { el.textContent = ''; }, 2000);
+    } catch (e) {
+        if (e.name === 'QuotaExceededError') {
+            alert('保存容量を超えました。写真の数を減らしてください。');
         }
     }
+}
 
-    // --- Save to localStorage ---
-    function saveState() {
-        try {
-            localStorage.setItem('menumaker_pro_state', JSON.stringify(state));
-            const el = document.getElementById('save-status');
-            el.textContent = '自動保存済み';
-            setTimeout(() => { el.textContent = ''; }, 2000);
-        } catch (e) {
-            if (e.name === 'QuotaExceededError') {
-                alert('保存容量を超えました。写真の数を減らしてください。');
-            }
-            console.warn('Failed to save state:', e);
+let saveTimeout;
+function debouncedSave() {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(saveState, 600);
+}
+
+// --- Step Navigation ---
+function goToStep(step) {
+    currentStep = step;
+
+    document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+
+    // Update progress dots
+    for (let i = 1; i <= 3; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.remove('active', 'done');
+        if (i === step) dot.classList.add('active');
+        else if (i < step) dot.classList.add('done');
+    }
+    for (let i = 1; i <= 2; i++) {
+        const line = document.getElementById('line-' + i);
+        line.classList.toggle('done', i < step);
+    }
+
+    // Show/hide bottom action bar
+    document.getElementById('bottom-step2').style.display = (step === 2) ? 'flex' : 'none';
+
+    // Render preview when entering step 3
+    if (step === 3) {
+        renderPreview();
+        setTimeout(scalePreview, 50);
+    }
+
+    window.scrollTo(0, 0);
+}
+
+// --- Photo handling ---
+function readFileAsBase64(file, maxWidth) {
+    return new Promise((resolve, reject) => {
+        if (!file.type.startsWith('image/')) {
+            reject(new Error('画像ファイルを選択してください'));
+            return;
         }
-    }
-
-    let saveTimeout;
-    function debouncedSave() {
-        clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(saveState, 600);
-    }
-
-    // --- Photo handling ---
-    function readFileAsBase64(file, maxWidth) {
-        return new Promise((resolve, reject) => {
-            if (!file.type.startsWith('image/')) {
-                reject(new Error('画像ファイルを選択してください'));
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const mw = maxWidth || 600;
-                    let w = img.width, h = img.height;
-                    if (w > mw) { h = h * mw / w; w = mw; }
-                    canvas.width = w;
-                    canvas.height = h;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, w, h);
-                    resolve(canvas.toDataURL('image/jpeg', 0.75));
-                };
-                img.onerror = reject;
-                img.src = e.target.result;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const mw = maxWidth || 600;
+                let w = img.width, h = img.height;
+                if (w > mw) { h = h * mw / w; w = mw; }
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                resolve(canvas.toDataURL('image/jpeg', 0.75));
             };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-    }
-
-    // --- Logo Upload ---
-    const logoArea = document.getElementById('logo-upload-area');
-    const logoInput = document.getElementById('logo-input');
-    const logoPlaceholder = document.getElementById('logo-placeholder');
-
-    logoPlaceholder.addEventListener('click', () => logoInput.click());
-    logoArea.addEventListener('dragover', (e) => { e.preventDefault(); logoArea.classList.add('drag-over'); });
-    logoArea.addEventListener('dragleave', () => logoArea.classList.remove('drag-over'));
-    logoArea.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        logoArea.classList.remove('drag-over');
-        const file = e.dataTransfer.files[0];
-        if (file) await handleLogoFile(file);
-    });
-    logoInput.addEventListener('change', async (e) => {
-        if (e.target.files[0]) await handleLogoFile(e.target.files[0]);
-    });
-
-    async function handleLogoFile(file) {
-        try {
-            state.shopLogo = await readFileAsBase64(file, 300);
-            updateLogoPreview();
-            renderPreview();
-            debouncedSave();
-        } catch (err) {
-            alert(err.message || '画像の読み込みに失敗しました');
-        }
-    }
-
-    function updateLogoPreview() {
-        const preview = document.getElementById('logo-preview');
-        const img = document.getElementById('logo-preview-img');
-        const placeholder = document.getElementById('logo-placeholder');
-        if (state.shopLogo) {
-            img.src = state.shopLogo;
-            preview.style.display = 'flex';
-            placeholder.style.display = 'none';
-        } else {
-            preview.style.display = 'none';
-            placeholder.style.display = 'flex';
-        }
-    }
-
-    function removeLogo() {
-        state.shopLogo = '';
-        logoInput.value = '';
-        updateLogoPreview();
-        renderPreview();
-        debouncedSave();
-    }
-
-    // --- Template Selection ---
-    document.getElementById('template-selector').addEventListener('click', (e) => {
-        const option = e.target.closest('.template-option');
-        if (!option) return;
-        document.querySelectorAll('.template-option').forEach(el => el.classList.remove('active'));
-        option.classList.add('active');
-        state.template = option.dataset.template;
-        renderPreview();
-        debouncedSave();
-    });
-
-    // --- Tax Toggle ---
-    document.getElementById('tax-included').addEventListener('click', () => {
-        state.taxDisplay = 'included';
-        document.getElementById('tax-included').classList.add('active');
-        document.getElementById('tax-excluded').classList.remove('active');
-        renderPreview();
-        debouncedSave();
-    });
-    document.getElementById('tax-excluded').addEventListener('click', () => {
-        state.taxDisplay = 'excluded';
-        document.getElementById('tax-excluded').classList.add('active');
-        document.getElementById('tax-included').classList.remove('active');
-        renderPreview();
-        debouncedSave();
-    });
-
-    // --- Page Size Toggle ---
-    document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            state.pageSize = btn.dataset.size;
-            renderPreview();
-            scalePreview();
-            debouncedSave();
-        });
-    });
-
-    // --- Shop Info Inputs ---
-    ['shop-name', 'shop-subtitle', 'shop-hours', 'shop-phone', 'shop-sns'].forEach(id => {
-        const el = document.getElementById(id);
-        const key = id.replace('shop-', 'shop').replace(/-([a-z])/g, (m, c) => c.toUpperCase());
-        const stateKey = key.replace('shop', 'shop');
-        const map = {
-            'shopname': 'shopName', 'shopsubtitle': 'shopSubtitle',
-            'shophours': 'shopHours', 'shopphone': 'shopPhone', 'shopsns': 'shopSns'
+            img.onerror = reject;
+            img.src = e.target.result;
         };
-        el.addEventListener('input', (e) => {
-            state[map[stateKey.toLowerCase()]] = e.target.value;
-            renderPreview();
-            debouncedSave();
-        });
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
     });
+}
 
-    // --- Category & Item Management ---
-    function renderCategories() {
-        const container = document.getElementById('categories-container');
-        container.innerHTML = '';
+// --- Template Selection (Step 1) ---
+document.getElementById('template-cards').addEventListener('click', (e) => {
+    const card = e.target.closest('.tpl-card');
+    if (!card) return;
+    state.template = card.dataset.template;
+    debouncedSave();
+    goToStep(2);
+});
 
-        state.categories.forEach((cat, ci) => {
-            const block = document.createElement('div');
-            block.className = 'category-block';
-            block.setAttribute('data-cat-index', ci);
+// --- Shop Name Input ---
+document.getElementById('shop-name').addEventListener('input', (e) => {
+    state.shopName = e.target.value;
+    debouncedSave();
+});
 
-            let itemsHtml = '';
-            cat.items.forEach((item, ii) => {
-                const photoThumb = item.photo
-                    ? `<div class="item-photo-thumb"><img src="${item.photo}" alt=""><button class="btn-remove-photo-sm" onclick="removeItemPhoto(${ci},${ii})">&times;</button></div>`
-                    : `<label class="item-photo-add" title="写真を追加"><span>📷</span><input type="file" accept="image/*" onchange="handleItemPhoto(${ci},${ii},this)" style="display:none;"></label>`;
+// --- Category & Item Rendering ---
+function renderCategories() {
+    const container = document.getElementById('categories-container');
+    container.innerHTML = '';
 
-                itemsHtml += `
-                    <div class="menu-item-block" data-item-index="${ii}">
-                        <div class="menu-item-row">
-                            ${photoThumb}
-                            <div class="item-fields">
-                                <input type="text" value="${escapeHtml(item.name)}" placeholder="メニュー名"
-                                       oninput="updateItem(${ci},${ii},'name',this.value)">
-                                <div class="item-row-sub">
-                                    <input type="text" value="${escapeHtml(item.price)}" placeholder="価格" class="price-input"
-                                           oninput="updateItem(${ci},${ii},'price',this.value)">
-                                    <input type="text" value="${escapeHtml(item.desc)}" placeholder="説明文（任意）" class="desc-input"
-                                           oninput="updateItem(${ci},${ii},'desc',this.value)">
-                                </div>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn-icon" onclick="moveItemUp(${ci},${ii})" title="上へ">&#x2191;</button>
-                                <button class="btn-icon" onclick="moveItemDown(${ci},${ii})" title="下へ">&#x2193;</button>
-                                <button class="btn-icon delete" onclick="deleteItem(${ci},${ii})" title="削除">&#x2715;</button>
-                            </div>
-                        </div>
-                    </div>`;
-            });
+    state.categories.forEach((cat, ci) => {
+        const card = document.createElement('div');
+        card.className = 'category-card';
 
-            block.innerHTML = `
-                <div class="category-header">
-                    <input type="text" value="${escapeHtml(cat.name)}" placeholder="カテゴリ名"
-                           oninput="updateCategoryName(${ci},this.value)">
-                    <button class="btn-icon" onclick="moveCategoryUp(${ci})" title="上へ">&#x2191;</button>
-                    <button class="btn-icon" onclick="moveCategoryDown(${ci})" title="下へ">&#x2193;</button>
-                    <button class="btn-icon delete" onclick="deleteCategory(${ci})" title="削除">&#x2715;</button>
-                </div>
-                <div class="category-desc-row">
-                    <input type="text" value="${escapeHtml(cat.desc || '')}" placeholder="カテゴリ説明（任意）"
-                           oninput="updateCategoryDesc(${ci},this.value)">
-                </div>
-                <div class="category-items">
-                    ${itemsHtml}
-                    <button class="btn-add-item" onclick="addItem(${ci})">＋ メニュー項目を追加</button>
+        let itemsHtml = '';
+        cat.items.forEach((item, ii) => {
+            const photoBtn = item.photo
+                ? `<div class="btn-photo" onclick="removeItemPhoto(${ci},${ii})" title="写真を削除">
+                       <img src="${item.photo}" alt="">
+                       <div class="remove-overlay">&times;</div>
+                   </div>`
+                : `<label class="btn-photo" title="写真を追加">
+                       📷
+                       <input type="file" accept="image/*" onchange="handleItemPhoto(${ci},${ii},this)" style="display:none;">
+                   </label>`;
+
+            itemsHtml += `
+                <div class="item-row">
+                    <input type="text" class="item-name-input" value="${escapeHtml(item.name)}" placeholder="メニュー名"
+                           oninput="updateItem(${ci},${ii},'name',this.value)">
+                    <input type="text" class="item-price-input" value="${escapeHtml(item.price)}" placeholder="価格"
+                           oninput="updateItem(${ci},${ii},'price',this.value)">
+                    ${photoBtn}
+                    <button class="btn-delete-small" onclick="deleteItem(${ci},${ii})" title="削除">&times;</button>
                 </div>`;
-            container.appendChild(block);
-        });
-    }
-
-    function updateCategoryName(ci, val) { state.categories[ci].name = val; renderPreview(); debouncedSave(); }
-    function updateCategoryDesc(ci, val) { state.categories[ci].desc = val; renderPreview(); debouncedSave(); }
-
-    function deleteCategory(ci) {
-        if (state.categories.length <= 1) return;
-        if (!confirm('このカテゴリを削除しますか？')) return;
-        state.categories.splice(ci, 1);
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-    function moveCategoryUp(ci) {
-        if (ci === 0) return;
-        [state.categories[ci-1], state.categories[ci]] = [state.categories[ci], state.categories[ci-1]];
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-    function moveCategoryDown(ci) {
-        if (ci >= state.categories.length - 1) return;
-        [state.categories[ci], state.categories[ci+1]] = [state.categories[ci+1], state.categories[ci]];
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-
-    function addItem(ci) {
-        state.categories[ci].items.push({ id: generateId(), name: '', price: '', desc: '', photo: '' });
-        renderCategories();
-        const blocks = document.querySelectorAll('.category-block');
-        const inputs = blocks[ci].querySelectorAll('.item-fields input[placeholder="メニュー名"]');
-        if (inputs.length) inputs[inputs.length - 1].focus();
-        debouncedSave();
-    }
-
-    function updateItem(ci, ii, field, val) {
-        state.categories[ci].items[ii][field] = val;
-        renderPreview(); debouncedSave();
-    }
-
-    function deleteItem(ci, ii) {
-        state.categories[ci].items.splice(ii, 1);
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-    function moveItemUp(ci, ii) {
-        if (ii === 0) return;
-        const items = state.categories[ci].items;
-        [items[ii-1], items[ii]] = [items[ii], items[ii-1]];
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-    function moveItemDown(ci, ii) {
-        const items = state.categories[ci].items;
-        if (ii >= items.length - 1) return;
-        [items[ii], items[ii+1]] = [items[ii+1], items[ii]];
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-
-    async function handleItemPhoto(ci, ii, input) {
-        const file = input.files[0];
-        if (!file) return;
-        try {
-            state.categories[ci].items[ii].photo = await readFileAsBase64(file, 500);
-            renderCategories(); renderPreview(); debouncedSave();
-        } catch (err) {
-            alert(err.message || '画像の読み込みに失敗しました');
-        }
-    }
-
-    function removeItemPhoto(ci, ii) {
-        state.categories[ci].items[ii].photo = '';
-        renderCategories(); renderPreview(); debouncedSave();
-    }
-
-    document.getElementById('btn-add-category').addEventListener('click', () => {
-        state.categories.push({ id: generateId(), name: '', desc: '', items: [{ id: generateId(), name: '', price: '', desc: '', photo: '' }] });
-        renderCategories();
-        const blocks = document.querySelectorAll('.category-block');
-        if (blocks.length) {
-            const input = blocks[blocks.length - 1].querySelector('.category-header input');
-            if (input) input.focus();
-        }
-        debouncedSave();
-    });
-
-    // --- Preview Rendering ---
-    function renderPreview() {
-        const preview = document.getElementById('menu-preview');
-        const tpl = state.template;
-
-        // Update template + page classes
-        preview.className = `menu-template template-${tpl} page-${state.pageSize}`;
-
-        // Header
-        const logoEl = document.getElementById('preview-logo');
-        const nameEl = document.getElementById('preview-name');
-        const subEl = document.getElementById('preview-subtitle');
-
-        if (state.shopLogo) {
-            logoEl.innerHTML = `<img src="${state.shopLogo}" alt="ロゴ">`;
-            logoEl.style.display = 'block';
-        } else {
-            logoEl.style.display = 'none';
-        }
-
-        nameEl.textContent = state.shopName || '店名を入力してください';
-        subEl.textContent = state.shopSubtitle || '';
-        subEl.style.display = state.shopSubtitle ? 'block' : 'none';
-
-        // Tax label
-        const taxLabel = state.taxDisplay === 'included' ? '（税込）' : '（税抜）';
-
-        // Body
-        const body = document.getElementById('preview-body');
-        let html = '';
-
-        const showPhotos = (tpl !== 'text-elegant' && tpl !== 'salon');
-
-        state.categories.forEach(cat => {
-            if (!cat.name && cat.items.every(i => !i.name)) return;
-
-            html += '<div class="category-section">';
-            if (cat.name) {
-                html += `<div class="category-title">${escapeHtml(cat.name)}</div>`;
-            }
-            if (cat.desc) {
-                html += `<div class="category-desc">${escapeHtml(cat.desc)}</div>`;
-            }
-
-            if (tpl === 'photo-grid') {
-                html += '<div class="grid-items">';
-                cat.items.forEach(item => {
-                    if (!item.name && !item.price) return;
-                    html += '<div class="grid-item">';
-                    if (item.photo) {
-                        html += `<div class="grid-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
-                    } else {
-                        html += '<div class="grid-photo grid-photo-empty"><span>No Photo</span></div>';
-                    }
-                    html += '<div class="grid-info">';
-                    html += `<span class="grid-name">${escapeHtml(item.name)}</span>`;
-                    if (item.desc) html += `<span class="grid-desc">${escapeHtml(item.desc)}</span>`;
-                    if (item.price) {
-                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
-                        html += `<span class="grid-price">${escapeHtml(p)}</span>`;
-                    }
-                    html += '</div></div>';
-                });
-                html += '</div>';
-            } else if (tpl === 'photo-side') {
-                cat.items.forEach(item => {
-                    if (!item.name && !item.price) return;
-                    html += '<div class="side-entry">';
-                    if (item.photo) {
-                        html += `<div class="side-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
-                    }
-                    html += '<div class="side-info">';
-                    html += `<span class="side-name">${escapeHtml(item.name)}</span>`;
-                    if (item.desc) html += `<span class="side-desc">${escapeHtml(item.desc)}</span>`;
-                    html += '</div>';
-                    if (item.price) {
-                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
-                        html += `<span class="side-price">${escapeHtml(p)}</span>`;
-                    }
-                    html += '</div>';
-                });
-            } else if (tpl === 'cafe') {
-                cat.items.forEach(item => {
-                    if (!item.name && !item.price) return;
-                    html += '<div class="cafe-entry">';
-                    if (item.photo) {
-                        html += `<div class="cafe-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
-                    }
-                    html += '<div class="cafe-info">';
-                    html += `<span class="cafe-name">${escapeHtml(item.name)}</span>`;
-                    if (item.desc) html += `<span class="cafe-desc">${escapeHtml(item.desc)}</span>`;
-                    html += '</div>';
-                    if (item.price) {
-                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
-                        html += `<span class="cafe-price">${escapeHtml(p)}</span>`;
-                    }
-                    html += '</div>';
-                });
-            } else if (tpl === 'izakaya') {
-                cat.items.forEach(item => {
-                    if (!item.name && !item.price) return;
-                    html += '<div class="iza-entry">';
-                    if (item.photo) {
-                        html += `<div class="iza-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
-                    }
-                    html += '<div class="iza-info">';
-                    html += `<span class="iza-name">${escapeHtml(item.name)}</span>`;
-                    if (item.desc) html += `<span class="iza-desc">${escapeHtml(item.desc)}</span>`;
-                    html += '</div>';
-                    if (item.price) {
-                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
-                        html += `<span class="iza-price">${escapeHtml(p)}</span>`;
-                    }
-                    html += '</div>';
-                });
-            } else {
-                // text-elegant, salon - classic list
-                cat.items.forEach(item => {
-                    if (!item.name && !item.price) return;
-                    html += '<div class="menu-entry">';
-                    html += '<div class="entry-info">';
-                    html += `<span class="entry-name">${escapeHtml(item.name) || '&nbsp;'}</span>`;
-                    if (item.desc) html += `<span class="entry-desc">${escapeHtml(item.desc)}</span>`;
-                    html += '</div>';
-                    if (item.price) {
-                        html += '<span class="dot-leader"></span>';
-                        const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
-                        html += `<span class="entry-price">${escapeHtml(p)}</span>`;
-                    }
-                    html += '</div>';
-                });
-            }
-
-            html += '</div>';
         });
 
-        // Tax note
-        html += `<div class="tax-note">※ 表示価格は全て${state.taxDisplay === 'included' ? '税込' : '税抜'}です</div>`;
-
-        body.innerHTML = html;
-
-        // Footer
-        const footer = document.getElementById('preview-footer');
-        const footerInfo = document.getElementById('preview-footer-info');
-        const parts = [];
-        if (state.shopHours) parts.push(state.shopHours);
-        if (state.shopPhone) parts.push('TEL: ' + state.shopPhone);
-        if (state.shopSns) parts.push(state.shopSns);
-        if (parts.length > 0) {
-            footerInfo.textContent = parts.join('  |  ');
-            footer.style.display = 'block';
-        } else {
-            footer.style.display = 'none';
-        }
-    }
-
-    // --- Preview Scaling ---
-    function scalePreview() {
-        const scaler = document.getElementById('preview-scaler');
-        const container = document.getElementById('preview-container');
-        const panel = document.getElementById('preview-panel');
-
-        const panelWidth = panel.clientWidth - 64;
-        const panelHeight = panel.clientHeight - 120;
-
-        let pageW, pageH;
-        switch (state.pageSize) {
-            case 'a4-portrait':  pageW = 794; pageH = 1123; break;
-            case 'a4-landscape': pageW = 1123; pageH = 794; break;
-            case 'a3-portrait':  pageW = 1123; pageH = 1587; break;
-            default:             pageW = 794; pageH = 1123;
-        }
-
-        container.style.width = pageW + 'px';
-        container.style.minHeight = pageH + 'px';
-
-        const scaleX = panelWidth / pageW;
-        const scaleY = panelHeight / pageH;
-        const scale = Math.min(scaleX, scaleY, 1);
-
-        scaler.style.transform = `scale(${scale})`;
-        scaler.style.transformOrigin = 'top center';
-        scaler.style.width = pageW + 'px';
-        scaler.style.margin = '0 auto';
-    }
-
-    // --- Image Download ---
-    async function downloadImage() {
-        const container = document.getElementById('preview-container');
-        const scaler = document.getElementById('preview-scaler');
-        // Temporarily reset scale for full-res capture
-        const origTransform = scaler.style.transform;
-        scaler.style.transform = 'none';
-
-        try {
-            const canvas = await html2canvas(container, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: null,
-                logging: false,
-                width: container.offsetWidth,
-                height: container.offsetHeight
-            });
-            const link = document.createElement('a');
-            link.download = `menu_${state.shopName || 'menu'}_${Date.now()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        } catch (err) {
-            console.error('Download failed:', err);
-            alert('画像の生成に失敗しました。もう一度お試しください。');
-        } finally {
-            scaler.style.transform = origTransform;
-        }
-    }
-
-    // --- Payment Modal ---
-    document.getElementById('btn-pdf-download').addEventListener('click', () => {
-        document.getElementById('payment-modal').style.display = 'flex';
+        card.innerHTML = `
+            <div class="cat-header">
+                <input type="text" class="cat-name-input" value="${escapeHtml(cat.name)}" placeholder="カテゴリ名（例：ドリンク）"
+                       oninput="updateCategoryName(${ci},this.value)">
+                <button class="btn-delete-small" onclick="deleteCategory(${ci})" title="カテゴリ削除">&times;</button>
+            </div>
+            ${itemsHtml}
+            <button class="btn-add-item" onclick="addItem(${ci})">+ メニューを追加</button>
+        `;
+        container.appendChild(card);
     });
-    function closePaymentModal() {
-        document.getElementById('payment-modal').style.display = 'none';
-    }
-    document.getElementById('payment-modal').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) closePaymentModal();
-    });
+}
 
-    // --- Mobile Toggle ---
-    const btnToggle = document.getElementById('btn-toggle-view');
-    let showingPreview = false;
-    function checkMobile() {
-        const isMobile = window.innerWidth <= 900;
-        btnToggle.style.display = isMobile ? 'block' : 'none';
-        if (!isMobile) {
-            document.getElementById('editor-panel').style.display = '';
-            document.getElementById('preview-panel').style.display = '';
-            showingPreview = false;
-            btnToggle.textContent = 'プレビュー';
-        }
-    }
-    btnToggle.addEventListener('click', () => {
-        showingPreview = !showingPreview;
-        document.getElementById('editor-panel').style.display = showingPreview ? 'none' : '';
-        document.getElementById('preview-panel').style.display = showingPreview ? '' : 'none';
-        btnToggle.textContent = showingPreview ? '編集に戻る' : 'プレビュー';
-        if (showingPreview) scalePreview();
-    });
-    window.addEventListener('resize', () => {
-        checkMobile();
-        scalePreview();
-    });
+function updateCategoryName(ci, val) {
+    state.categories[ci].name = val;
+    debouncedSave();
+}
 
-    // --- Restore UI from state ---
-    function restoreUI() {
-        document.querySelectorAll('.template-option').forEach(el => {
-            el.classList.toggle('active', el.dataset.template === state.template);
-        });
-        document.getElementById('shop-name').value = state.shopName;
-        document.getElementById('shop-subtitle').value = state.shopSubtitle;
-        document.getElementById('shop-hours').value = state.shopHours || '';
-        document.getElementById('shop-phone').value = state.shopPhone || '';
-        document.getElementById('shop-sns').value = state.shopSns || '';
-
-        document.getElementById('tax-included').classList.toggle('active', state.taxDisplay === 'included');
-        document.getElementById('tax-excluded').classList.toggle('active', state.taxDisplay === 'excluded');
-
-        document.querySelectorAll('.size-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.size === state.pageSize);
-        });
-
-        updateLogoPreview();
-    }
-
-    // --- Initialize ---
-    loadState();
-    restoreUI();
+function deleteCategory(ci) {
+    if (state.categories.length <= 1) return;
+    state.categories.splice(ci, 1);
     renderCategories();
-    renderPreview();
-    checkMobile();
-    setTimeout(scalePreview, 50);
-    </script>
+    debouncedSave();
+}
+
+function addItem(ci) {
+    state.categories[ci].items.push({ id: generateId(), name: '', price: '', photo: '' });
+    renderCategories();
+    const cards = document.querySelectorAll('.category-card');
+    const inputs = cards[ci].querySelectorAll('.item-name-input');
+    if (inputs.length) inputs[inputs.length - 1].focus();
+    debouncedSave();
+}
+
+function updateItem(ci, ii, field, val) {
+    state.categories[ci].items[ii][field] = val;
+    debouncedSave();
+}
+
+function deleteItem(ci, ii) {
+    state.categories[ci].items.splice(ii, 1);
+    if (state.categories[ci].items.length === 0) {
+        state.categories[ci].items.push({ id: generateId(), name: '', price: '', photo: '' });
+    }
+    renderCategories();
+    debouncedSave();
+}
+
+async function handleItemPhoto(ci, ii, input) {
+    const file = input.files[0];
+    if (!file) return;
+    try {
+        state.categories[ci].items[ii].photo = await readFileAsBase64(file, 500);
+        renderCategories();
+        debouncedSave();
+    } catch (err) {
+        alert(err.message || '画像の読み込みに失敗しました');
+    }
+}
+
+function removeItemPhoto(ci, ii) {
+    state.categories[ci].items[ii].photo = '';
+    renderCategories();
+    debouncedSave();
+}
+
+document.getElementById('btn-add-category').addEventListener('click', () => {
+    state.categories.push({
+        id: generateId(),
+        name: '',
+        items: [{ id: generateId(), name: '', price: '', photo: '' }]
+    });
+    renderCategories();
+    const cards = document.querySelectorAll('.category-card');
+    if (cards.length) {
+        const input = cards[cards.length - 1].querySelector('.cat-name-input');
+        if (input) input.focus();
+    }
+    debouncedSave();
+});
+
+// --- Preview Rendering (reuses templates.css classes) ---
+function renderPreview() {
+    const preview = document.getElementById('menu-preview');
+    const tpl = state.template;
+
+    preview.className = `menu-template template-${tpl} page-${state.pageSize}`;
+
+    // Header
+    document.getElementById('preview-logo').style.display = 'none';
+    document.getElementById('preview-name').textContent = state.shopName || '店名を入力してください';
+    document.getElementById('preview-subtitle').style.display = 'none';
+
+    // Tax label
+    const taxLabel = state.taxDisplay === 'included' ? '税込' : '税抜';
+
+    // Body
+    const body = document.getElementById('preview-body');
+    let html = '';
+
+    state.categories.forEach(cat => {
+        if (!cat.name && cat.items.every(i => !i.name)) return;
+
+        html += '<div class="category-section">';
+        if (cat.name) {
+            html += `<div class="category-title">${escapeHtml(cat.name)}</div>`;
+        }
+
+        if (tpl === 'photo-grid') {
+            html += '<div class="grid-items">';
+            cat.items.forEach(item => {
+                if (!item.name && !item.price) return;
+                html += '<div class="grid-item">';
+                if (item.photo) {
+                    html += `<div class="grid-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                } else {
+                    html += '<div class="grid-photo grid-photo-empty"><span>No Photo</span></div>';
+                }
+                html += '<div class="grid-info">';
+                html += `<span class="grid-name">${escapeHtml(item.name)}</span>`;
+                if (item.price) {
+                    const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                    html += `<span class="grid-price">${escapeHtml(p)}</span>`;
+                }
+                html += '</div></div>';
+            });
+            html += '</div>';
+        } else if (tpl === 'photo-side') {
+            cat.items.forEach(item => {
+                if (!item.name && !item.price) return;
+                html += '<div class="side-entry">';
+                if (item.photo) {
+                    html += `<div class="side-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                }
+                html += '<div class="side-info">';
+                html += `<span class="side-name">${escapeHtml(item.name)}</span>`;
+                html += '</div>';
+                if (item.price) {
+                    const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                    html += `<span class="side-price">${escapeHtml(p)}</span>`;
+                }
+                html += '</div>';
+            });
+        } else if (tpl === 'cafe') {
+            cat.items.forEach(item => {
+                if (!item.name && !item.price) return;
+                html += '<div class="cafe-entry">';
+                if (item.photo) {
+                    html += `<div class="cafe-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                }
+                html += '<div class="cafe-info">';
+                html += `<span class="cafe-name">${escapeHtml(item.name)}</span>`;
+                html += '</div>';
+                if (item.price) {
+                    const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                    html += `<span class="cafe-price">${escapeHtml(p)}</span>`;
+                }
+                html += '</div>';
+            });
+        } else if (tpl === 'izakaya') {
+            cat.items.forEach(item => {
+                if (!item.name && !item.price) return;
+                html += '<div class="iza-entry">';
+                if (item.photo) {
+                    html += `<div class="iza-photo"><img src="${item.photo}" alt="${escapeHtml(item.name)}"></div>`;
+                }
+                html += '<div class="iza-info">';
+                html += `<span class="iza-name">${escapeHtml(item.name)}</span>`;
+                html += '</div>';
+                if (item.price) {
+                    const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                    html += `<span class="iza-price">${escapeHtml(p)}</span>`;
+                }
+                html += '</div>';
+            });
+        } else {
+            // text-elegant, salon
+            cat.items.forEach(item => {
+                if (!item.name && !item.price) return;
+                html += '<div class="menu-entry">';
+                html += '<div class="entry-info">';
+                html += `<span class="entry-name">${escapeHtml(item.name) || '&nbsp;'}</span>`;
+                html += '</div>';
+                if (item.price) {
+                    html += '<span class="dot-leader"></span>';
+                    const p = item.price.startsWith('\u00a5') ? item.price : `\u00a5${item.price}`;
+                    html += `<span class="entry-price">${escapeHtml(p)}</span>`;
+                }
+                html += '</div>';
+            });
+        }
+
+        html += '</div>';
+    });
+
+    html += `<div class="tax-note">※ 表示価格は全て${taxLabel}です</div>`;
+    body.innerHTML = html;
+
+    // Footer hidden (simplified)
+    document.getElementById('preview-footer').style.display = 'none';
+}
+
+// --- Preview Scaling ---
+function scalePreview() {
+    const scaler = document.getElementById('preview-scaler');
+    const container = document.getElementById('preview-container');
+
+    const pageW = 794, pageH = 1123; // A4 portrait
+    container.style.width = pageW + 'px';
+    container.style.minHeight = pageH + 'px';
+
+    const availWidth = Math.min(window.innerWidth - 32, 720);
+    const scale = Math.min(availWidth / pageW, 1);
+
+    scaler.style.transform = `scale(${scale})`;
+    scaler.style.transformOrigin = 'top center';
+    scaler.style.width = pageW + 'px';
+    scaler.style.margin = '0 auto';
+    // Set wrapper height so content below isn't overlapped
+    scaler.parentElement.style.height = (pageH * scale + 20) + 'px';
+}
+
+// --- Image Download ---
+async function downloadImage() {
+    const container = document.getElementById('preview-container');
+    const scaler = document.getElementById('preview-scaler');
+    const origTransform = scaler.style.transform;
+    scaler.style.transform = 'none';
+    scaler.parentElement.style.height = 'auto';
+
+    try {
+        const canvas = await html2canvas(container, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: null,
+            logging: false,
+            width: container.offsetWidth,
+            height: container.offsetHeight
+        });
+        const link = document.createElement('a');
+        link.download = `menu_${state.shopName || 'menu'}_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    } catch (err) {
+        console.error('Download failed:', err);
+        alert('画像の生成に失敗しました。もう一度お試しください。');
+    } finally {
+        scaler.style.transform = origTransform;
+        scalePreview();
+    }
+}
+
+// --- Window resize ---
+window.addEventListener('resize', () => {
+    if (currentStep === 3) scalePreview();
+});
+
+// --- Restore UI ---
+function restoreUI() {
+    document.getElementById('shop-name').value = state.shopName;
+}
+
+// --- Initialize ---
+loadState();
+restoreUI();
+renderCategories();
+goToStep(1);
+</script>
 </body>
 </html>
