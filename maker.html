@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メニュー作成 | メニューメーカー</title>
+    <meta name="description" content="テンプレートを選んでメニュー項目を入力するだけ。おしゃれなメニュー表を無料で作成・印刷できます。">
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700;800&family=Noto+Serif+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/templates.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6327505164684489" crossorigin="anonymous"></script>
+</head>
+<body class="maker-page">
+    <!-- Navigation -->
+    <nav class="maker-nav">
+        <div class="nav-brand">
+            <a href="index.html">
+                <span class="nav-icon">📋</span>
+                <span class="nav-name">メニューメーカー</span>
+            </a>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+            <span id="save-status" style="font-size:0.75rem;color:var(--text-muted);"></span>
+        </div>
+    </nav>
+
+    <div class="maker-layout">
+        <!-- Editor Panel -->
+        <div class="editor-panel">
+            <div class="editor-steps">
+
+                <!-- STEP 1: Template Selection -->
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-num">1</div>
+                        <div class="step-title">テンプレート選択</div>
+                    </div>
+                    <div class="template-grid" id="template-selector">
+                        <div class="template-option active" data-template="washoku">
+                            <span class="tpl-icon">🏮</span>
+                            <span class="tpl-name">和食・居酒屋風</span>
+                            <span class="tpl-desc">金文字 × 暗色背景</span>
+                        </div>
+                        <div class="template-option" data-template="cafe">
+                            <span class="tpl-icon">☕</span>
+                            <span class="tpl-name">カフェ風</span>
+                            <span class="tpl-desc">クリーム × 手書き感</span>
+                        </div>
+                        <div class="template-option" data-template="modern">
+                            <span class="tpl-icon">◻️</span>
+                            <span class="tpl-name">モダン</span>
+                            <span class="tpl-desc">白黒ミニマル</span>
+                        </div>
+                        <div class="template-option" data-template="elegant">
+                            <span class="tpl-icon">✨</span>
+                            <span class="tpl-name">エレガント</span>
+                            <span class="tpl-desc">チャコール × ゴールド</span>
+                        </div>
+                        <div class="template-option" data-template="salon">
+                            <span class="tpl-icon">💅</span>
+                            <span class="tpl-name">サロン</span>
+                            <span class="tpl-desc">パステル × やわらか</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Shop Info -->
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-num">2</div>
+                        <div class="step-title">店舗情報</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">店名 *</label>
+                        <input type="text" class="form-input" id="shop-name" placeholder="例：和食処 匠" maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ロゴ / アイコン</label>
+                        <div class="icon-selector" id="icon-selector">
+                            <div class="icon-option active" data-icon="">なし</div>
+                            <div class="icon-option" data-icon="🍺">🍺</div>
+                            <div class="icon-option" data-icon="🍣">🍣</div>
+                            <div class="icon-option" data-icon="🍜">🍜</div>
+                            <div class="icon-option" data-icon="🍱">🍱</div>
+                            <div class="icon-option" data-icon="🍕">🍕</div>
+                            <div class="icon-option" data-icon="🍖">🍖</div>
+                            <div class="icon-option" data-icon="🍰">🍰</div>
+                            <div class="icon-option" data-icon="☕">☕</div>
+                            <div class="icon-option" data-icon="🍷">🍷</div>
+                            <div class="icon-option" data-icon="🍸">🍸</div>
+                            <div class="icon-option" data-icon="🍶">🍶</div>
+                            <div class="icon-option" data-icon="💇‍♀️">💇‍♀️</div>
+                            <div class="icon-option" data-icon="💅">💅</div>
+                            <div class="icon-option" data-icon="💆">💆</div>
+                            <div class="icon-option" data-icon="🌸">🌸</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">サブタイトル（任意）</label>
+                        <input type="text" class="form-input" id="shop-subtitle" placeholder="例：創業1985年 / Season Menu">
+                    </div>
+                </div>
+
+                <!-- STEP 3: Menu Items -->
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-num">3</div>
+                        <div class="step-title">メニュー項目</div>
+                    </div>
+                    <div id="categories-container">
+                        <!-- Categories dynamically added here -->
+                    </div>
+                    <button class="btn-add-category" id="btn-add-category">
+                        ＋ カテゴリを追加
+                    </button>
+                </div>
+
+                <!-- STEP 4: Download -->
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-num">4</div>
+                        <div class="step-title">プレビュー & ダウンロード</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        <button class="btn-secondary btn-full" onclick="window.print()">
+                            🖨️ ブラウザで印刷（無料）
+                        </button>
+                        <button class="btn-primary btn-full" onclick="downloadImage()">
+                            📷 画像ダウンロード（無料）
+                        </button>
+                        <button class="btn-primary btn-full" id="btn-pdf-download" style="background:linear-gradient(135deg,#c9a84c,#a08530);">
+                            📄 高解像度PDF（¥500）
+                        </button>
+                        <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">
+                            無料印刷にはウォーターマークは含まれません
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+            <div class="preview-actions">
+                <button class="btn-secondary" onclick="window.print()">🖨️ 印刷</button>
+                <button class="btn-secondary" onclick="downloadImage()">📷 画像保存</button>
+            </div>
+            <div class="preview-container" id="preview-container">
+                <div class="menu-template template-washoku" id="menu-preview">
+                    <div class="menu-header">
+                        <div class="shop-icon" id="preview-icon"></div>
+                        <h1 class="shop-name" id="preview-name">店名を入力してください</h1>
+                        <p class="shop-subtitle" id="preview-subtitle"></p>
+                    </div>
+                    <div class="menu-body" id="preview-body">
+                        <!-- Menu items rendered here -->
+                    </div>
+                </div>
+                <div class="watermark">Powered by メニューメーカー</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:center;justify-content:center;">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;max-width:480px;width:90%;text-align:center;">
+            <h3 style="margin-bottom:16px;">📄 高解像度PDFダウンロード</h3>
+            <p style="color:var(--text-secondary);margin-bottom:24px;font-size:0.9rem;">
+                印刷所入稿にも対応した高品質PDFをダウンロードできます。<br>ウォーターマークなし。
+            </p>
+            <div style="font-size:2.5rem;font-weight:800;color:var(--accent-light);margin-bottom:24px;">¥500</div>
+            <div id="payment" style="margin-bottom:16px;">
+                <!-- Stripe payment element placeholder -->
+                <div style="padding:20px;background:var(--bg-primary);border:1px dashed var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;">
+                    Stripe決済準備中...<br>
+                    <small>（実装時にStripe Elementsを統合）</small>
+                </div>
+            </div>
+            <button class="btn-secondary btn-full" onclick="closePaymentModal()">閉じる</button>
+        </div>
+    </div>
+
+    <script>
+    // ============================================
+    // MENU MAKER - Main Application Logic
+    // ============================================
+
+    // --- State ---
+    let state = {
+        template: 'washoku',
+        shopName: '',
+        shopIcon: '',
+        shopSubtitle: '',
+        categories: []
+    };
+
+    // --- Load from localStorage ---
+    function loadState() {
+        try {
+            const saved = localStorage.getItem('menumaker_state');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state = { ...state, ...parsed };
+            }
+        } catch (e) {
+            console.warn('Failed to load state:', e);
+        }
+
+        // Default categories if empty
+        if (state.categories.length === 0) {
+            state.categories = [
+                {
+                    name: '前菜・一品料理',
+                    items: [
+                        { name: '枝豆', price: '380', desc: '' },
+                        { name: '冷やしトマト', price: '450', desc: '' }
+                    ]
+                },
+                {
+                    name: 'メイン',
+                    items: [
+                        { name: '本日の刺身盛り合わせ', price: '1,800', desc: '旬の魚を五種盛りで' },
+                        { name: '和牛ステーキ', price: '2,800', desc: '' }
+                    ]
+                },
+                {
+                    name: 'ドリンク',
+                    items: [
+                        { name: '生ビール', price: '550', desc: '' },
+                        { name: '日本酒（一合）', price: '680', desc: '' }
+                    ]
+                }
+            ];
+        }
+    }
+
+    // --- Save to localStorage ---
+    function saveState() {
+        try {
+            localStorage.setItem('menumaker_state', JSON.stringify(state));
+            const el = document.getElementById('save-status');
+            el.textContent = '✓ 保存済み';
+            setTimeout(() => { el.textContent = ''; }, 2000);
+        } catch (e) {
+            console.warn('Failed to save state:', e);
+        }
+    }
+
+    // Debounced save
+    let saveTimeout;
+    function debouncedSave() {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(saveState, 500);
+    }
+
+    // --- Template Selection ---
+    document.getElementById('template-selector').addEventListener('click', (e) => {
+        const option = e.target.closest('.template-option');
+        if (!option) return;
+        document.querySelectorAll('.template-option').forEach(el => el.classList.remove('active'));
+        option.classList.add('active');
+        state.template = option.dataset.template;
+        renderPreview();
+        debouncedSave();
+    });
+
+    // --- Icon Selection ---
+    document.getElementById('icon-selector').addEventListener('click', (e) => {
+        const option = e.target.closest('.icon-option');
+        if (!option) return;
+        document.querySelectorAll('.icon-option').forEach(el => el.classList.remove('active'));
+        option.classList.add('active');
+        state.shopIcon = option.dataset.icon;
+        renderPreview();
+        debouncedSave();
+    });
+
+    // --- Shop Info Inputs ---
+    document.getElementById('shop-name').addEventListener('input', (e) => {
+        state.shopName = e.target.value;
+        renderPreview();
+        debouncedSave();
+    });
+
+    document.getElementById('shop-subtitle').addEventListener('input', (e) => {
+        state.shopSubtitle = e.target.value;
+        renderPreview();
+        debouncedSave();
+    });
+
+    // --- Category Management ---
+    function renderCategories() {
+        const container = document.getElementById('categories-container');
+        container.innerHTML = '';
+
+        state.categories.forEach((cat, catIndex) => {
+            const block = document.createElement('div');
+            block.className = 'category-block';
+            block.innerHTML = `
+                <div class="category-header">
+                    <input type="text" value="${escapeHtml(cat.name)}" placeholder="カテゴリ名"
+                           onchange="updateCategoryName(${catIndex}, this.value)"
+                           oninput="updateCategoryName(${catIndex}, this.value)">
+                    <button class="btn-icon" onclick="moveCategoryUp(${catIndex})" title="上へ">↑</button>
+                    <button class="btn-icon" onclick="moveCategoryDown(${catIndex})" title="下へ">↓</button>
+                    <button class="btn-icon delete" onclick="deleteCategory(${catIndex})" title="削除">✕</button>
+                </div>
+                <div class="category-items">
+                    ${cat.items.map((item, itemIndex) => `
+                        <div>
+                            <div class="menu-item-row">
+                                <input type="text" value="${escapeHtml(item.name)}" placeholder="メニュー名"
+                                       oninput="updateItem(${catIndex}, ${itemIndex}, 'name', this.value)">
+                                <input type="text" value="${escapeHtml(item.price)}" placeholder="価格"
+                                       oninput="updateItem(${catIndex}, ${itemIndex}, 'price', this.value)">
+                                <div class="item-actions">
+                                    <button class="btn-icon" onclick="moveItemUp(${catIndex}, ${itemIndex})" title="上へ">↑</button>
+                                    <button class="btn-icon" onclick="moveItemDown(${catIndex}, ${itemIndex})" title="下へ">↓</button>
+                                    <button class="btn-icon delete" onclick="deleteItem(${catIndex}, ${itemIndex})" title="削除">✕</button>
+                                </div>
+                            </div>
+                            <div class="item-desc-row">
+                                <input type="text" value="${escapeHtml(item.desc)}" placeholder="説明文（任意）"
+                                       oninput="updateItem(${catIndex}, ${itemIndex}, 'desc', this.value)">
+                            </div>
+                        </div>
+                    `).join('')}
+                    <button class="btn-add-item" onclick="addItem(${catIndex})">＋ メニュー項目を追加</button>
+                </div>
+            `;
+            container.appendChild(block);
+        });
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function updateCategoryName(catIndex, value) {
+        state.categories[catIndex].name = value;
+        renderPreview();
+        debouncedSave();
+    }
+
+    function deleteCategory(catIndex) {
+        if (state.categories.length <= 1) return;
+        if (!confirm('このカテゴリを削除しますか？')) return;
+        state.categories.splice(catIndex, 1);
+        renderCategories();
+        renderPreview();
+        debouncedSave();
+    }
+
+    function moveCategoryUp(catIndex) {
+        if (catIndex === 0) return;
+        [state.categories[catIndex - 1], state.categories[catIndex]] =
+            [state.categories[catIndex], state.categories[catIndex - 1]];
+        renderCategories();
+        renderPreview();
+        debouncedSave();
+    }
+
+    function moveCategoryDown(catIndex) {
+        if (catIndex >= state.categories.length - 1) return;
+        [state.categories[catIndex], state.categories[catIndex + 1]] =
+            [state.categories[catIndex + 1], state.categories[catIndex]];
+        renderCategories();
+        renderPreview();
+        debouncedSave();
+    }
+
+    function addItem(catIndex) {
+        state.categories[catIndex].items.push({ name: '', price: '', desc: '' });
+        renderCategories();
+        // Focus the new item's name input
+        const blocks = document.querySelectorAll('.category-block');
+        const items = blocks[catIndex].querySelectorAll('.menu-item-row input[placeholder="メニュー名"]');
+        if (items.length) items[items.length - 1].focus();
+        debouncedSave();
+    }
+
+    function updateItem(catIndex, itemIndex, field, value) {
+        state.categories[catIndex].items[itemIndex][field] = value;
+        renderPreview();
+        debouncedSave();
+    }
+
+    function deleteItem(catIndex, itemIndex) {
+        state.categories[catIndex].items.splice(itemIndex, 1);
+        renderCategories();
+        renderPreview();
+        debouncedSave();
+    }
+
+    function moveItemUp(catIndex, itemIndex) {
+        if (itemIndex === 0) return;
+        const items = state.categories[catIndex].items;
+        [items[itemIndex - 1], items[itemIndex]] = [items[itemIndex], items[itemIndex - 1]];
+        renderCategories();
+        renderPreview();
+        debouncedSave();
+    }
+
+    function moveItemDown(catIndex, itemIndex) {
+        const items = state.categories[catIndex].items;
+        if (itemIndex >= items.length - 1) return;
+        [items[itemIndex], items[itemIndex + 1]] = [items[itemIndex + 1], items[itemIndex]];
+        renderCategories();
+        renderPreview();
+        debouncedSave();
+    }
+
+    document.getElementById('btn-add-category').addEventListener('click', () => {
+        state.categories.push({ name: '', items: [{ name: '', price: '', desc: '' }] });
+        renderCategories();
+        // Focus the new category name input
+        const blocks = document.querySelectorAll('.category-block');
+        if (blocks.length) {
+            const input = blocks[blocks.length - 1].querySelector('.category-header input');
+            if (input) input.focus();
+        }
+        debouncedSave();
+    });
+
+    // --- Preview Rendering ---
+    function renderPreview() {
+        const preview = document.getElementById('menu-preview');
+
+        // Update template class
+        preview.className = `menu-template template-${state.template}`;
+
+        // Update header
+        const iconEl = document.getElementById('preview-icon');
+        const nameEl = document.getElementById('preview-name');
+        const subEl = document.getElementById('preview-subtitle');
+
+        iconEl.textContent = state.shopIcon || '';
+        iconEl.style.display = state.shopIcon ? 'block' : 'none';
+        nameEl.textContent = state.shopName || '店名を入力してください';
+        subEl.textContent = state.shopSubtitle || '';
+        subEl.style.display = state.shopSubtitle ? 'block' : 'none';
+
+        // Update body
+        const body = document.getElementById('preview-body');
+        let html = '';
+
+        state.categories.forEach(cat => {
+            if (!cat.name && cat.items.every(i => !i.name)) return;
+            html += '<div class="category-section">';
+            if (cat.name) {
+                html += `<div class="category-title">${escapeHtml(cat.name)}</div>`;
+            }
+            cat.items.forEach(item => {
+                if (!item.name && !item.price) return;
+                html += '<div class="menu-entry">';
+                html += '<div class="entry-info">';
+                html += `<span class="entry-name">${escapeHtml(item.name) || '&nbsp;'}</span>`;
+                if (item.desc) {
+                    html += `<span class="entry-desc">${escapeHtml(item.desc)}</span>`;
+                }
+                html += '</div>';
+                if (item.price) {
+                    html += '<span class="dot-leader"></span>';
+                    const priceText = item.price.startsWith('¥') ? item.price : `¥${item.price}`;
+                    html += `<span class="entry-price">${escapeHtml(priceText)}</span>`;
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+
+        body.innerHTML = html;
+    }
+
+    // --- Image Download ---
+    async function downloadImage() {
+        const container = document.getElementById('preview-container');
+        try {
+            const canvas = await html2canvas(container, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null,
+                logging: false
+            });
+            const link = document.createElement('a');
+            link.download = `menu_${state.shopName || 'menu'}_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        } catch (err) {
+            console.error('Download failed:', err);
+            alert('画像の生成に失敗しました。もう一度お試しください。');
+        }
+    }
+
+    // --- PDF Payment Modal ---
+    document.getElementById('btn-pdf-download').addEventListener('click', () => {
+        const modal = document.getElementById('payment-modal');
+        modal.style.display = 'flex';
+    });
+
+    function closePaymentModal() {
+        document.getElementById('payment-modal').style.display = 'none';
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('payment-modal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closePaymentModal();
+    });
+
+    // --- Restore state on load ---
+    function restoreUI() {
+        // Template
+        document.querySelectorAll('.template-option').forEach(el => {
+            el.classList.toggle('active', el.dataset.template === state.template);
+        });
+
+        // Icon
+        document.querySelectorAll('.icon-option').forEach(el => {
+            el.classList.toggle('active', el.dataset.icon === state.shopIcon);
+        });
+
+        // Shop info
+        document.getElementById('shop-name').value = state.shopName;
+        document.getElementById('shop-subtitle').value = state.shopSubtitle;
+    }
+
+    // --- Initialize ---
+    loadState();
+    restoreUI();
+    renderCategories();
+    renderPreview();
+    </script>
+</body>
+</html>
